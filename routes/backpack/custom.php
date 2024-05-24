@@ -16,9 +16,9 @@ Route::group([
     ),
     'namespace' => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
-    Route::crud('plant-crud-controller', 'PlantCrudControllerCrudController');
-    Route::crud('weather-forecast-crud-controller', 'WeatherForecastCrudControllerCrudController');
-    Route::crud('user-crud-controller', 'UserCrudControllerCrudController');
-    Route::crud('location-crud-controller', 'LocationCrudControllerCrudController');
+    Route::crud('plant', 'PlantController');
+    Route::crud('weather-forecast-crud-controller', 'WeatherForecastController');
+    Route::crud('user-crud-controller', 'UserController');
+    Route::crud('location-crud-controller', 'LocationController');
     Route::crud('user', 'UserCrudController');
 }); // this should be the absolute last line of this file

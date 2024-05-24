@@ -6,7 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WeatherForecastCrudController extends Model
+class WeatherForecast extends Model
 {
     use CrudTrait;
     use HasFactory;

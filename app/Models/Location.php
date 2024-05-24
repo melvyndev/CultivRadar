@@ -6,7 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LocationCrudController extends Model
+class Location extends Model
 {
     use CrudTrait;
     use HasFactory;
@@ -17,7 +17,7 @@ class LocationCrudController extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'location_crud_controllers';
+    protected $table = 'locations';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

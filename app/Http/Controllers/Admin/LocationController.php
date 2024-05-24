@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\WeatherForecastCrudControllerRequest;
+use App\Http\Requests\LocationCrudControllerRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class WeatherForecastCrudControllerCrudController
+ * Class LocationCrudControllerCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class WeatherForecastCrudControllerCrudController extends CrudController
+class LocationController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class WeatherForecastCrudControllerCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\WeatherForecastCrudController::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/weather-forecast-crud-controller');
-        CRUD::setEntityNameStrings('weather forecast crud controller', 'weather forecast crud controllers');
+        CRUD::setModel(\App\Models\Location::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/location-crud-controller');
+        CRUD::setEntityNameStrings('location crud controller', 'location crud controllers');
     }
 
     /**
@@ -55,7 +55,7 @@ class WeatherForecastCrudControllerCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(WeatherForecastCrudControllerRequest::class);
+        CRUD::setValidation(LocationCrudControllerRequest::class);
         CRUD::setFromDb(); // set fields from db columns.
 
         /**

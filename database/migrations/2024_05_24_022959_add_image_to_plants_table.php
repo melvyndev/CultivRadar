@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('weather_forecasts', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('plants', function (Blueprint $table) {
+            $table->string('image',255)->nulLable();
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('weather_forecasts');
+        Schema::table('plants', function (Blueprint $table) {
+            $table->dropColumn('image');
+        });
     }
 };

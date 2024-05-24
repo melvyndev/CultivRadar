@@ -25,7 +25,22 @@ class PlantCrudControllerRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            
+            'scientific_name' => 'required|string|max:255',
+            'common_name' => 'required|string|max:255',
+            'family' => 'required|string|max:255',
+            'growth_conditions' => 'required|string',
+            'light_requirement' => 'required|string|max:100',
+            'water_requirement' => 'required|string|max:100',
+            'soil_requirement' => 'required|string|max:255',
+            'soil_ph' => 'required|numeric',
+            'temperature_min' => 'required|numeric',
+            'temperature_max' => 'required|numeric',
+            'humidity_min' => 'required|numeric',
+            'humidity_max' => 'required|numeric',
+            'description' => 'required|string',
+            
+           
         ];
     }
 

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\PlantCrudControllerRequest;
+use App\Http\Requests\UserCrudControllerRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class PlantCrudControllerCrudController
+ * Class UserCrudControllerCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class PlantCrudControllerCrudController extends CrudController
+class UserController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class PlantCrudControllerCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\PlantCrudController::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/plant-crud-controller');
-        CRUD::setEntityNameStrings('plant crud controller', 'plant crud controllers');
+        CRUD::setModel(\App\Models\UserCrudController::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/user-crud-controller');
+        CRUD::setEntityNameStrings('user crud controller', 'user crud controllers');
     }
 
     /**
@@ -55,7 +55,7 @@ class PlantCrudControllerCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(PlantCrudControllerRequest::class);
+        CRUD::setValidation(UserCrudControllerRequest::class);
         CRUD::setFromDb(); // set fields from db columns.
 
         /**
