@@ -13,6 +13,7 @@ L.Icon.Default.mergeOptions({
   iconRetinaUrl: pins,
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  iconSize:     [50], // size of the icon
 });
 
 const Home = () => {
@@ -91,7 +92,7 @@ console.log(response.data);
                   <p>Humidité : {markerWeather.main.humidity}%</p>
                   <p>Conditions : {markerWeather.weather[0].description}</p>
                   <p>Pression : {markerWeather.main.pressure}hPa</p>
-                  <Link to={'/visualisation'}>Commencer à cultivé</Link>
+                  <Link className="btn btn-outline-success" to={'/visualisation'}>Commencer à cultivé</Link>
                 </div>
               ) : (
                 <p>Chargement des données météo...</p>
