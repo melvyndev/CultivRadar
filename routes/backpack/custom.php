@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PlantController;
 
 // --------------------------
 // Custom Backpack Routes
@@ -22,3 +23,6 @@ Route::group([
     Route::crud('location-crud-controller', 'LocationController');
     Route::crud('user', 'UserCrudController');
 }); // this should be the absolute last line of this file
+
+
+Route::get('api/plants', [PlantController::class, 'index']);
