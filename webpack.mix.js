@@ -1,6 +1,7 @@
 const mix = require('laravel-mix');
 
-mix.js('frontend/src/index.js', 'public/js')
-   .react()
+mix.setPublicPath('public')
+   .setResourceRoot('/storage/basset/')
+   .js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
    .version();
