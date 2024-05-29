@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('scientific_name', 255);
             $table->string('common_name', 255);
+            $table->string('image')->default('default.jpg');
             $table->string('family', 255);
             $table->text('growth_conditions');
             $table->string('light_requirement', 100);

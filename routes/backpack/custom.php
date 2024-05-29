@@ -25,4 +25,5 @@ Route::group([
 }); // this should be the absolute last line of this file
 
 
-Route::get('api/plants', [PlantController::class, 'index']);
+// Route::get('plants', [PlantController::class, 'index']);
+Route::apiResource('api/plants', PlantController::class);
