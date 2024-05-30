@@ -5,3 +5,9 @@ mix.setPublicPath('public')
    .js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
    .version();
+
+mix.webpackConfig({
+    resolve: {
+        extensions: ['.js', '.json', '.wasm', '.mjs', '.jsx', '.scss'],
+    }
+});
