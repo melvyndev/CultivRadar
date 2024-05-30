@@ -3,7 +3,10 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "watch": "mix watch",
+        "prod": "npm run production",
+        "production": "mix --production"
     },
     "devDependencies": {
         "axios": "^1.6.4",
