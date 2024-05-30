@@ -4,11 +4,17 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
+        "postinstall": "npm run production",
+        "development": "mix",
         "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "test": "npm run production"
     },
     "devDependencies": {
+        "@babel/preset-react": "^7.24.6",
         "axios": "^1.6.4",
         "laravel-vite-plugin": "^1.0",
         "resolve-url-loader": "^5.0.0",
@@ -17,6 +23,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "bootstrap": "^5.3.3",
         "cross-env": "^7.0.3",
         "laravel-mix": "^6.0.49"
     }
