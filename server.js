@@ -1,8 +1,7 @@
-const path = require('path');
+const app = require('./app.js');
 
-// Servir les fichiers statiques du build React
-app.use(express.static(path.join(__dirname, 'frontend/build')));
+const PORT = process.env.PORT || 3000;
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
+app.listen(PORT, () => {
+  console.log(`Serveur en écoute sur le port ${PORT}`);
 });

@@ -12,7 +12,6 @@
         "test": "npm run production",
         "start": "node server.js",
         "heroku-postbuild": "cd frontend && npm install && npm run build"
-      }
     },
     "devDependencies": {
         "axios": "^1.6.4",
@@ -24,6 +23,7 @@
     },
     "dependencies": {
         "bootstrap": "^5.3.3",
-        "cross-env": "^7.0.3"
+        "cross-env": "^7.0.3",
+        "express": "^4.19.2"
     }
 }
