@@ -9,7 +9,10 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "test": "npm run production"
+        "test": "npm run production",
+        "start": "node server.js",
+        "heroku-postbuild": "cd frontend && npm install && npm run build"
+      }
     },
     "devDependencies": {
         "axios": "^1.6.4",

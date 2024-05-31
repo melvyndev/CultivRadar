@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Nav from "../components/Nav";
 import Header from "../components/Header";
 import { MapContainer, TileLayer, GeoJSON, Marker, Popup, useMapEvents } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import axios from 'axios';
 import pins from '../assets/images/pins.png';
