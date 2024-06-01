@@ -1,40 +1,58 @@
 import React, { useState, useEffect, useRef } from 'react';
-import * as d3 from 'd3';
 import Nav from '../components/Nav';
 import Header from '../components/Header';
 import axios from 'axios';
-import Card from '../components/CardComponent';
+import List from '../components/List';
+
 const Visualization = () => {
   const [weather, setWeather] = useState(null);
   const [plants, setPlants] = useState([]);
   const [filteredForecast, setFilteredForecast] = useState([]);
-  const [minTemp, setMinTemp] = useState(-10); // Plage de température minimale par défaut
-  const [maxTemp, setMaxTemp] = useState(40);  // Plage de température maximale par défaut
+  const [minTemp, setMinTemp] = useState(-10); // Default min temperature range
+  const [maxTemp, setMaxTemp] = useState(40);  // Default max temperature range
   const chartRef = useRef();
 
-  // Récupération des données météorologiques pour une position par défaut
- 
-  // Récupération des prévisions météorologiques et des plantes à cultiver
+  // Fetch weather data for a default location
   useEffect(() => {
-    axios.get('http://localhost:8000/api/plants')
-    .then(response => {
-      setPlants(response.data);
-    })
-    .catch(error => {
-    });
+    const fetchWeather = async () => {
+      try {
+        const response = await axios.get('YOUR_WEATHER_API_ENDPOINT');
+        setWeather(response.data);
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+      }
+    };
+
+    fetchWeather();
   }, []);
 
+  // Fetch plants data
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/plants')
+      .then(response => {
+        console.log('Plants data fetched:', response.data); // Debug log
+        setPlants(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching plants data:', error);
+      });
+  }, []);
 
-
-
-  // Filtrage des prévisions en fonction de la plage de température
- 
+  // Filter weather forecast based on temperature range
+  useEffect(() => {
+    if (weather && weather.forecast) {
+      const filtered = weather.forecast.filter(forecast => 
+        forecast.temp >= minTemp && forecast.temp <= maxTemp
+      );
+      setFilteredForecast(filtered);
+    }
+  }, [weather, minTemp, maxTemp]);
 
   return (
     <main className="flex-shrink-0">
       <Nav />
       <Header />
-      <div className="container">
+      <div className="container py-4">
         <div className="row">
           <div className="col-md-6">
             <h2>Conditions Météorologiques</h2>
@@ -49,15 +67,7 @@ const Visualization = () => {
             )}
           </div>
           <div className="col-md-6">
-            <h2>Plantes à Cultiver</h2>
-          <Card  body={<div>{plants.map((plant,index) =>
-         <div>
-            <li>{plant.common_name}</li>
-            <li><img src={plant.image} alt="" /></li>
-
-          </div>
-)}</div>}>
-           </Card>
+            <List plants={plants} />
           </div>
         </div>
         <div className="row">
@@ -81,7 +91,6 @@ const Visualization = () => {
                 />
               </label>
             </div>
-            <svg ref={chartRef} width="800" height="400"></svg>
           </div>
         </div>
       </div>
