@@ -27,3 +27,6 @@ Route::group([
 
 // Route::get('plants', [PlantController::class, 'index']);
 Route::apiResource('api/plants', PlantController::class);
+Route::get('api/plants/{id}', [PlantController::class, 'show']);
+Route::get('api/plants/{latitude}/{longitude}', [PlantController::class, 'getPlantsByLocation']);
+

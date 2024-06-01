@@ -75,7 +75,7 @@ console.log(response.data);
     <main className="flex-shrink-0">
       <Nav />
       <Header />
-      <MapContainer center={position} zoom={13} style={{ height: "500px", width: "100%" }}>
+      <MapContainer center={position} zoom={11} style={{ height: "500px", width: "100%" }}>
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>'
@@ -91,7 +91,7 @@ console.log(response.data);
                   <p>Humidité : {markerWeather.main.humidity}%</p>
                   <p>Conditions : {markerWeather.weather[0].description}</p>
                   <p>Pression : {markerWeather.main.pressure}hPa</p>
-                  <Link className="btn btn-outline-success" to={'/visualisation'}>Commencer à cultivé</Link>
+                  <Link className="btn btn-outline-success" to={'/visualisation/' + markerPosition[0] + '/' + markerPosition[1] + '/'}>Commencer à cultivé</Link>
                 </div>
               ) : (
                 <p>Chargement des données météo...</p>

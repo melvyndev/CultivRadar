@@ -1,0 +1,34 @@
+.plant-details-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.plant-details {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.plant-image {
+    flex: 1 1 300px;
+    max-width: 300px;
+    margin-right: 20px;
+    border-radius: 8px;
+}
+
+.plant-info {
+    flex: 2 1 600px;
+}
+
+.plant-info p {
+    margin: 10px 0;
+}
+
+.card-component {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
