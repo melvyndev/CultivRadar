@@ -64,10 +64,10 @@ const Visualization = () => {
           <div className="col-md-6">
             <h2>Conditions Météorologiques</h2>
             {weather ? (
-             <div>
-            <p><FontAwesomeIcon icon={faTemperatureLow} /> Température : {weather.main.temp}°C</p>
-            <p><FontAwesomeIcon icon={faTint} /> Humidité : {weather.main.humidity}%</p>
-            <p><FontAwesomeIcon icon={faCloud} /> Conditions : {weather.weather[0].description}</p>
+             <div className='d-lg-flex'>
+            <p><img width={35} src={require('../assets/images/temperature.gif')} alt="" /> Température : {weather.main.temp}°C</p>
+            <p><img width={35} src={require('../assets/images/humidity.gif')} alt="" /> Humidité : {weather.main.humidity}%</p>
+            <p><img width={35} src={require('../assets/images/clouds.gif')} alt="" /> Conditions : {weather.weather[0].description}</p>
               </div>
             ) : (
                 <p>Chargement des données météo...</p>

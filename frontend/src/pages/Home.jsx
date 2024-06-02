@@ -73,7 +73,7 @@ console.log(response.data);
 
   return (
     <main className="flex-shrink-0">
-      <Nav />
+      <Nav/>
       <Header />
       <MapContainer center={position} zoom={11} style={{ height: "500px", width: "100%" }}>
         <TileLayer
@@ -86,12 +86,13 @@ console.log(response.data);
             <Popup>
               {markerWeather ? (
                 <div>
-                  <h2>Météo à la position cliquée</h2>
+                  <h5>Météo à la position cliquée</h5>
                   <p>Température : {markerWeather.main.temp}°C</p>
                   <p>Humidité : {markerWeather.main.humidity}%</p>
                   <p>Conditions : {markerWeather.weather[0].description}</p>
                   <p>Pression : {markerWeather.main.pressure}hPa</p>
                   <Link className="btn btn-outline-success" to={'/visualisation/' + markerPosition[0] + '/' + markerPosition[1] + '/'}>Commencer à cultivé</Link>
+                
                 </div>
               ) : (
                 <p>Chargement des données météo...</p>
