@@ -29,7 +29,7 @@ body {
 }
 
 .bg-plant {
-    background-image: url('./assets/images/background.png');
+    /* background-image: url('./assets/images/background.png'); */
     background-repeat: no-repeat;
     background-size: initial;
     background-position: bottom;
@@ -37,8 +37,52 @@ body {
 
 .transparent {
     width: 100%;
-    height: 400px;
-    max-width: 360px;
-    background-color: #99b195cc !important;
-    border-radius: 12px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+
+.plant-details-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 900px;
+    padding: 20px;
+    margin: 20px;
+}
+
+.plant-details-container h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.plant-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.plant-image {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.plant-info {
+    width: 100%;
+    text-align: left;
+}
+
+.plant-info p {
+    color: #34495e;
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.plant-info p strong {
+    color: #2c3e50;
 }

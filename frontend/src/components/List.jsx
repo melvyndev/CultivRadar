@@ -10,8 +10,8 @@ import Badge from 'react-bootstrap/Badge';
 const List = ({ plants }) => {
   return (
     <div>
-      <h2>Plantes à Cultiver</h2>
-      <Box className="pt-3 transparent" sx={{ width: '100%', height: 400, maxWidth: 360, bgcolor: 'background.paper' }}>
+      <Box className="transparent" sx={{ width: '100%', height: 400, maxWidth: 360, bgcolor: 'background.paper' }}>
+        <h2>Plantes à Cultiver</h2>
         <FixedSizeList
           height={400}
           width={360}
