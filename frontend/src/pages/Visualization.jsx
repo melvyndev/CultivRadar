@@ -11,10 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTemperatureLow, faTint, faCloud } from '@fortawesome/free-solid-svg-icons';
 
 const Visualization = () => {
-  // Récupération des paramètres d'URL
   const { lat, lng } = useParams();
-
-  // Déclaration des états
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [plants, setPlants] = useState([]);
@@ -22,9 +19,8 @@ const Visualization = () => {
   const humidityChartRef = useRef();
   const plantingChartRef = useRef();
 
-  // Effet pour charger les données
   useEffect(() => {
-    // Fonction pour récupérer les données météo actuelles
+    // Fetch current weather data
     const fetchWeather = async () => {
       try {
         const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=3a6ee895a099497f0ac5d5fa99e903bb&units=metric`);
@@ -35,7 +31,7 @@ const Visualization = () => {
     };
     fetchWeather();
 
-    // Fonction pour récupérer les prévisions météo
+    // Fetch forecast data
     const fetchForecast = async () => {
       try {
         const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=3a6ee895a099497f0ac5d5fa99e903bb&units=metric`);
@@ -46,7 +42,7 @@ const Visualization = () => {
     };
     fetchForecast();
 
-    // Fonction pour récupérer les données sur les plantes
+    // Fetch plants data
     axios.get(`http://127.0.0.1:8000/api/plants/${lat}/${lng}`)
       .then(response => {
         console.log('Plants data fetched:', response.data);
@@ -57,7 +53,6 @@ const Visualization = () => {
       });
   }, [lat, lng]);
 
-  // Effet pour créer les graphiques
   useEffect(() => {
     if (forecast.length > 0) {
       // Agréger les données par semaine
@@ -66,7 +61,7 @@ const Visualization = () => {
         humidity: d3.mean(v, d => d.main.humidity)
       }), d => {
         const date = new Date(d.dt_txt);
-        const week = date.toLocaleDateString('fr-FR', { week: 'short' }); // Format français
+        const week = date.toLocaleDateString('en-US', { week: 'short' });
         return week;
       });
       // Transformer les données agrégées en tableau
@@ -93,13 +88,14 @@ const Visualization = () => {
 
       const xAxisTemp = g => g
         .attr("transform", `translate(0,${heightTemp})`)
-        .call(d3.axisBottom(xTemp).tickFormat(d => `${d} - ${d+6}`)); // Format des semaines
+        .call(d3.axisBottom(xTemp));
 
       const yAxisTemp = g => g
-        .call(d3.axisLeft(yTemp).tickFormat(d => `${d}°C`)); // Format de l'axe Y
+        .call(d3.axisLeft(yTemp));
 
-      const barTemp = svgTemp.append("g")
+        const barTemp = svgTemp.append("g")
         .attr("transform", `translate(${marginTemp.left},${marginTemp.top})`);
+      
 
       barTemp.append("g")
         .attr("class", "x-axis")
@@ -109,7 +105,7 @@ const Visualization = () => {
         .attr("class", "y-axis")
         .call(yAxisTemp);
 
-      barTemp.selectAll(".bar")
+        barTemp.selectAll(".bar")
         .data(aggregatedArray)
         .enter().append("rect")
         .attr("class", "bar")
@@ -117,6 +113,53 @@ const Visualization = () => {
         .attr("y", d => yTemp(d.temp))
         .attr("width", xTemp.bandwidth())
         .attr("height", d => heightTemp - yTemp(d.temp))
+        .attr("fill", d => d.temp > 25 ? "red" : "steelblue"); // Change la couleur en rouge si la température est supérieure à 25°C
+      
+
+      // Humidity Chart
+      const svgHumidity = d3.select(humidityChartRef.current);
+      svgHumidity.selectAll("*").remove();
+
+      const marginHumidity = { top: 20, right: 30, bottom: 40, left: 40 };
+      const widthHumidity = 800 - marginHumidity.left - marginHumidity.right;
+      const heightHumidity = 400 - marginHumidity.top - marginHumidity.bottom;
+
+      const xHumidity = d3.scaleBand()
+        .domain(weeks)
+        .range([0, widthHumidity])
+        .padding(0.1);
+
+      const yHumidity = d3.scaleLinear()
+        .domain([0, d3.max(aggregatedArray, d => d.humidity)])
+        .nice()
+        .range([heightHumidity, 0]);
+
+      const xAxisHumidity = g => g
+        .attr("transform", `translate(0,${heightHumidity})`)
+        .call(d3.axisBottom(xHumidity));
+
+      const yAxisHumidity = g => g
+        .call(d3.axisLeft(yHumidity));
+
+        const barHumidity = svgHumidity.append("g")
+        .attr("transform", `translate(${marginHumidity.left},${marginHumidity.top})`);
+      
+      barHumidity.append("g")
+        .attr("class", "x-axis")
+        .call(xAxisHumidity);
+
+      barHumidity.append("g")
+        .attr("class", "y-axis")
+        .call(yAxisHumidity);
+
+        barHumidity.selectAll(".bar")
+        .data(aggregatedArray)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", d => xHumidity(d.week))
+        .attr("y", d => yHumidity(d.humidity))
+        .attr("width", xHumidity.bandwidth())
+        .attr("height", d => heightHumidity - yHumidity(d.humidity))
         .attr("fill", d => d.temp > 25 ? "red" : "steelblue"); // Change la couleur en rouge si la température est supérieure à 25°C
     }
   }, [forecast]);
