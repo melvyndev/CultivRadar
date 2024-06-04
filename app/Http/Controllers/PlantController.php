@@ -41,7 +41,6 @@ class PlantController extends Controller
            ->where('temperature_max', '>=', $currentTemperature)
            ->where('humidity_min', '<=', $currentHumidity)
            ->where('humidity_max', '>=', $currentHumidity)
-           ->where('soil_ph', '>=',2) // Condition pour le pH du sol (remplacer 6.0 par la valeur souhaitée)
            ->get();
 
        }

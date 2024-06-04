@@ -6,7 +6,6 @@ import axios from 'axios';
 import List from '../components/List';
 import * as d3 from 'd3';
 import RadarChart from '../components/RadarChart';
-import PlantMap from '../components/PlantMap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTemperatureLow, faTint, faCloud } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,6 +14,7 @@ const Visualization = () => {
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [plants, setPlants] = useState([]);
+  const [plantingData, setPlantingData] = useState([]);
   const tempChartRef = useRef();
   const humidityChartRef = useRef();
   const plantingChartRef = useRef();
@@ -51,6 +51,24 @@ const Visualization = () => {
       .catch(error => {
         console.error('Error fetching plants data:', error);
       });
+
+    // Fetch planting periods data
+    axios.get(`http://127.0.0.1:8000/api/planting/${lat}/${lng}`)
+      .then(response => {
+        console.log('Planting periods data fetched:', response.data);
+        setPlantingData(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching planting periods data:', error);
+      });
+      const examplePlantingData = [
+        { culture: "Tomato", start: "2023-03-01", end: "2023-05-31" },
+        { culture: "Lettuce", start: "2023-02-01", end: "2023-04-30" },
+        { culture: "Carrot", start: "2023-04-01", end: "2023-06-30" },
+        { culture: "Pepper", start: "2023-05-01", end: "2023-07-31" },
+        { culture: "Cucumber", start: "2023-06-01", end: "2023-08-31" }
+      ];
+      setPlantingData(examplePlantingData);
   }, [lat, lng]);
 
   useEffect(() => {
@@ -93,9 +111,8 @@ const Visualization = () => {
       const yAxisTemp = g => g
         .call(d3.axisLeft(yTemp));
 
-        const barTemp = svgTemp.append("g")
+      const barTemp = svgTemp.append("g")
         .attr("transform", `translate(${marginTemp.left},${marginTemp.top})`);
-      
 
       barTemp.append("g")
         .attr("class", "x-axis")
@@ -105,7 +122,7 @@ const Visualization = () => {
         .attr("class", "y-axis")
         .call(yAxisTemp);
 
-        barTemp.selectAll(".bar")
+      barTemp.selectAll(".bar")
         .data(aggregatedArray)
         .enter().append("rect")
         .attr("class", "bar")
@@ -113,8 +130,7 @@ const Visualization = () => {
         .attr("y", d => yTemp(d.temp))
         .attr("width", xTemp.bandwidth())
         .attr("height", d => heightTemp - yTemp(d.temp))
-        .attr("fill", d => d.temp > 25 ? "red" : "steelblue"); // Change la couleur en rouge si la température est supérieure à 25°C
-      
+        .attr("fill", "red"); // Change la couleur en rouge si la température est supérieure à 25°C
 
       // Humidity Chart
       const svgHumidity = d3.select(humidityChartRef.current);
@@ -141,9 +157,9 @@ const Visualization = () => {
       const yAxisHumidity = g => g
         .call(d3.axisLeft(yHumidity));
 
-        const barHumidity = svgHumidity.append("g")
+      const barHumidity = svgHumidity.append("g")
         .attr("transform", `translate(${marginHumidity.left},${marginHumidity.top})`);
-      
+
       barHumidity.append("g")
         .attr("class", "x-axis")
         .call(xAxisHumidity);
@@ -152,7 +168,7 @@ const Visualization = () => {
         .attr("class", "y-axis")
         .call(yAxisHumidity);
 
-        barHumidity.selectAll(".bar")
+      barHumidity.selectAll(".bar")
         .data(aggregatedArray)
         .enter().append("rect")
         .attr("class", "bar")
@@ -160,9 +176,72 @@ const Visualization = () => {
         .attr("y", d => yHumidity(d.humidity))
         .attr("width", xHumidity.bandwidth())
         .attr("height", d => heightHumidity - yHumidity(d.humidity))
-        .attr("fill", d => d.temp > 25 ? "red" : "steelblue"); // Change la couleur en rouge si la température est supérieure à 25°C
+        .attr("fill", "steelblue"); // Change la couleur en rouge si la température est supérieure à 25°C
     }
   }, [forecast]);
+
+  useEffect(() => {
+    if (plantingData.length > 0) {
+      // Log the planting data to check its format and content
+      console.log('Planting Data:', plantingData);
+
+      // Create the planting periods chart
+      const svgPlanting = d3.select(plantingChartRef.current);
+      svgPlanting.selectAll("*").remove();
+
+      const marginPlanting = { top: 20, right: 30, bottom: 40, left: 40 };
+      const widthPlanting = 800 - marginPlanting.left - marginPlanting.right;
+      const heightPlanting = 400 - marginPlanting.top - marginPlanting.bottom;
+
+      // Extract unique cultures
+      const cultures = [...new Set(plantingData.map(d => d.culture))];
+
+      // Define scales
+      const xPlanting = d3.scaleTime()
+        .domain([new Date(2023, 0, 1), new Date(2023, 11, 31)])  // January to December
+        .range([0, widthPlanting]);
+
+      const yPlanting = d3.scaleBand()
+        .domain(cultures)
+        .range([0, heightPlanting])
+        .padding(0.1);
+
+      // Define axes
+      const xAxisPlanting = g => g
+        .attr("transform", `translate(0,${heightPlanting})`)
+        .call(d3.axisBottom(xPlanting).tickFormat(d3.timeFormat("%B")));
+
+      const yAxisPlanting = g => g
+        .call(d3.axisLeft(yPlanting));
+
+      // Create the main SVG group
+      const plantingG = svgPlanting.append("g")
+        .attr("transform", `translate(${marginPlanting.left},${marginPlanting.top})`);
+
+      // Add the axes
+      plantingG.append("g")
+        .attr("class", "x-axis")
+        .call(xAxisPlanting);
+
+      plantingG.append("g")
+        .attr("class", "y-axis")
+        .call(yAxisPlanting);
+
+      // Add the lines
+      cultures.forEach(culture => {
+        const cultureData = plantingData.filter(d => d.culture === culture);
+        cultureData.forEach(period => {
+          plantingG.append("line")
+            .attr("x1", xPlanting(new Date(period.start)))
+            .attr("x2", xPlanting(new Date(period.end)))
+            .attr("y1", yPlanting(culture) + yPlanting.bandwidth() / 2)
+            .attr("y2", yPlanting(culture) + yPlanting.bandwidth() / 2)
+            .attr("stroke", "green")
+            .attr("stroke-width", 7);
+        });
+      });
+    }
+  }, [plantingData]);
 
   return (
     <main className="flex-shrink-0 bg-plant">
@@ -188,19 +267,19 @@ const Visualization = () => {
         </div>
         <div className="row">
           <div className="col-10">
-            <div className='transparent'>
+            <div className=''>
               <h2>Histogramme de Température</h2>
               <svg ref={tempChartRef} width={800} height={400}></svg>
             </div>
           </div>
           <div className="col-10">
-            <div className='transparent'>
-              <h2>Diagramme en Barres d'Humidité</h2>
+            <div className=''>
+              <h2>Histogramme taux d'Humidité</h2>
               <svg ref={humidityChartRef} width={800} height={400}></svg>
             </div>
           </div>
           <div className="col-10">
-            <div className='transparent'>
+            <div className=''>
               <h2>Diagramme Radar des Exigences de Croissance</h2>
               <RadarChart data={[
                 { criteria: "Light", value: 5 },
@@ -212,12 +291,11 @@ const Visualization = () => {
             </div>
           </div>
           <div className="col-10">
-          <div className='transparent'>
-            <h2>Graphique en Courbes de Périodes de Plantation</h2>
-            <svg ref={plantingChartRef} width={800} height={400}></svg>
+            <div className='transparent'>
+              <h2>Graphique en Courbes de Périodes de Plantation</h2>
+              <svg ref={plantingChartRef} width={800} height={400}></svg>
             </div>
           </div>
-        
         </div>
       </div>
     </main>
