@@ -5,6 +5,8 @@ import * as d3 from 'd3';
 const PlantingChart = ({ data }) => {
   const plantingChartRef = useRef();
 
+
+  
   useEffect(() => {
     const svgPlanting = d3.select(plantingChartRef.current);
     svgPlanting.selectAll("*").remove();
