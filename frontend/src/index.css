@@ -1,6 +1,7 @@
 @import url('./assets/css/nav.css');
 @import url('./assets/css/map.css');
 @import url('./assets/css/header.css');
+@import url('./assets/css/visualization.css');
 @import "leaflet/dist/leaflet.css";
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import url('./assets/css/details-plant.css');
@@ -86,3 +87,20 @@ body {
 .plant-info p strong {
     color: #2c3e50;
 }
+
+
+
+.neon-bar {
+    fill: transparent;
+    stroke: rgb(0, 255, 26); /* Neon color */
+    stroke-width: 2px;
+    stroke-opacity: 0.8;
+    filter: drop-shadow(0 0 10px rgb(186, 250, 200)) drop-shadow(0 0 20px rgb(184, 255, 182));
+  }
+  
+  .neon-bar:hover {
+    stroke-opacity: 1;
+    filter: drop-shadow(0 0 5px rgb(0, 255, 17)) drop-shadow(0 0 10px rgb(106, 255, 0));
+
+  }
+  

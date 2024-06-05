@@ -61,14 +61,15 @@ const Visualization = () => {
       .catch(error => {
         console.error('Error fetching planting periods data:', error);
       });
-      const examplePlantingData = [
-        { culture: "Tomato", start: "2023-03-01", end: "2023-05-31" },
-        { culture: "Lettuce", start: "2023-02-01", end: "2023-04-30" },
-        { culture: "Carrot", start: "2023-04-01", end: "2023-06-30" },
-        { culture: "Pepper", start: "2023-05-01", end: "2023-07-31" },
-        { culture: "Cucumber", start: "2023-06-01", end: "2023-08-31" }
-      ];
-      setPlantingData(examplePlantingData);
+
+    const examplePlantingData = [
+      { culture: "Tomato", start: "2023-03-01", end: "2023-05-31" },
+      { culture: "Lettuce", start: "2023-02-01", end: "2023-04-30" },
+      { culture: "Carrot", start: "2023-04-01", end: "2023-06-30" },
+      { culture: "Pepper", start: "2023-05-01", end: "2023-07-31" },
+      { culture: "Cucumber", start: "2023-06-01", end: "2023-08-31" }
+    ];
+    setPlantingData(examplePlantingData);
   }, [lat, lng]);
 
   useEffect(() => {
@@ -109,7 +110,7 @@ const Visualization = () => {
         .call(d3.axisBottom(xTemp));
 
       const yAxisTemp = g => g
-        .call(d3.axisLeft(yTemp));
+        .call(d3.axisLeft(yTemp).tickFormat(d => `${d}°C`));  // Ajout de l'unité °C
 
       const barTemp = svgTemp.append("g")
         .attr("transform", `translate(${marginTemp.left},${marginTemp.top})`);
@@ -125,12 +126,16 @@ const Visualization = () => {
       barTemp.selectAll(".bar")
         .data(aggregatedArray)
         .enter().append("rect")
-        .attr("class", "bar")
+        .attr("class", "bar neon-bar")
         .attr("x", d => xTemp(d.week))
         .attr("y", d => yTemp(d.temp))
         .attr("width", xTemp.bandwidth())
         .attr("height", d => heightTemp - yTemp(d.temp))
-        .attr("fill", "red"); // Change la couleur en rouge si la température est supérieure à 25°C
+        .attr("title", d => `${d.temp}°C`)  // Ajout de l'unité °C dans le titre
+        .transition() // Add animation
+        .duration(1000)
+        .attr("y", d => yTemp(d.temp))
+        .attr("height", d => heightTemp - yTemp(d.temp));
 
       // Humidity Chart
       const svgHumidity = d3.select(humidityChartRef.current);
@@ -155,7 +160,7 @@ const Visualization = () => {
         .call(d3.axisBottom(xHumidity));
 
       const yAxisHumidity = g => g
-        .call(d3.axisLeft(yHumidity));
+        .call(d3.axisLeft(yHumidity).tickFormat(d => `${d}%`));  // Ajout de l'unité %
 
       const barHumidity = svgHumidity.append("g")
         .attr("transform", `translate(${marginHumidity.left},${marginHumidity.top})`);
@@ -171,18 +176,21 @@ const Visualization = () => {
       barHumidity.selectAll(".bar")
         .data(aggregatedArray)
         .enter().append("rect")
-        .attr("class", "bar")
+        .attr("class", "bar neon-bar")
         .attr("x", d => xHumidity(d.week))
         .attr("y", d => yHumidity(d.humidity))
         .attr("width", xHumidity.bandwidth())
         .attr("height", d => heightHumidity - yHumidity(d.humidity))
-        .attr("fill", "steelblue"); // Change la couleur en rouge si la température est supérieure à 25°C
+        .attr("title", d => `${d.humidity}%`)  // Ajout de l'unité % dans le titre
+        .transition() // Add animation
+        .duration(1000)
+        .attr("y", d => yHumidity(d.humidity))
+        .attr("height", d => heightHumidity - yHumidity(d.humidity));
     }
   }, [forecast]);
 
   useEffect(() => {
     if (plantingData.length > 0) {
-      // Log the planting data to check its format and content
       console.log('Planting Data:', plantingData);
 
       // Create the planting periods chart
@@ -253,9 +261,9 @@ const Visualization = () => {
             {weather ? (
               <div className='transparent p-3'>
                 <h2>Conditions Météorologiques</h2>
-                <p><img width={35} src={require('../assets/images/temperature.gif')} alt="" /> Température : {weather.main.temp}°C</p>
-                <p><img width={35} src={require('../assets/images/humidity.gif')} alt="" /> Humidité : {weather.main.humidity}%</p>
-                <p><img width={35} src={require('../assets/images/clouds.gif')} alt="" /> Conditions : {weather.weather[0].description}</p>
+                <p><FontAwesomeIcon icon={faTemperatureLow} /> Température : {weather.main.temp}°C</p>
+                <p><FontAwesomeIcon icon={faTint} /> Humidité : {weather.main.humidity}%</p>
+                <p><FontAwesomeIcon icon={faCloud} /> Conditions : {weather.weather[0].description}</p>
               </div>
             ) : (
               <p>Chargement des données météo...</p>
