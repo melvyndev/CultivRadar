@@ -1,6 +1,7 @@
 @import url('./assets/css/nav.css');
 @import url('./assets/css/map.css');
 @import url('./assets/css/header.css');
+@import url('./assets/css/weather.css');
 @import url('./assets/css/visualization.css');
 @import "leaflet/dist/leaflet.css";
 @import 'bootstrap/dist/css/bootstrap.min.css';
@@ -47,11 +48,9 @@ body {
 .plant-details-container {
     background-color: #ffffff;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 80%;
     max-width: 900px;
     padding: 20px;
-    margin: 20px;
 }
 
 .plant-details-container h1 {

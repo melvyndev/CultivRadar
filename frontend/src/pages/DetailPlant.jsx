@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Header from "../components/Header";
 import Nav from "../components/Nav";
+import PlantingChart from '../components/PlantingChart';
+import RadarChart from '../components/RadarChart';
 
 function DetailPlant() {
     const [plant, setPlant] = useState({});
@@ -23,8 +25,10 @@ function DetailPlant() {
         <div>
             <Nav />
             <Header />
-            <div className="plant-details-container">
-        <h1>Détails de la plante</h1>
+            <div className="container py-4">
+                <div className='row'>
+                    <div className='col-md-6'>
+                    <h1>Détails de la plante</h1>
         <div className="plant-details">
             <img
                 src={`http://127.0.0.1:8000/${plant.image}`}
@@ -47,6 +51,26 @@ function DetailPlant() {
                 <p><strong>Description:</strong> {plant.description}</p>
             </div>
         </div>
+                    </div>
+                    <div className="col-6">
+            <div className=''>
+              <h2>Diagramme Radar des Exigences de Croissance</h2>
+              <RadarChart data={[
+                { criteria: "Lummiere", value: 5 },
+                { criteria: "Eau", value: 3 },
+                { criteria: "Sol", value: 4 },
+                { criteria: "pH", value: 2 },
+                { criteria: "Temperature", value: 4 }
+              ]} />
+            </div>
+          </div>
+          <div className="col-12">
+            <PlantingChart lat={-20.98539601183345}  lng={55.64559675115465} />
+          </div>
+                </div>
+       
+
+       
     </div>
         </div>
     );

@@ -1,62 +1,90 @@
-// components/PlantingChart.js
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
+import axios from 'axios';
 
-const PlantingChart = ({ data }) => {
+const PlantingChart = ({ lat, lng }) => {
   const plantingChartRef = useRef();
+  const [plantingData, setPlantingData] = useState([]);
 
-
-  
   useEffect(() => {
-    const svgPlanting = d3.select(plantingChartRef.current);
-    svgPlanting.selectAll("*").remove();
+    // Récupération des données sur les périodes de plantation
+    axios.get(`http://127.0.0.1:8000/api/planting/${lat}/${lng}`)
+      .then(response => {
+        console.log('Données sur les périodes de plantation récupérées:', response.data);
+        setPlantingData(response.data);
+      })
+      .catch(error => {
+        console.error('Erreur lors de la récupération des données sur les périodes de plantation:', error);
+        // Utilisation de données d'exemple en cas d'erreur
+        const exempleDonneesPlantation = [
+          { culture: "Tomate", début: "2023-03-01", fin: "2023-05-31" },
+          { culture: "Laitue", début: "2023-02-01", fin: "2023-04-30" },
+          { culture: "Carotte", début: "2023-04-01", fin: "2023-06-30" },
+          { culture: "Poivron", début: "2023-05-01", fin: "2023-07-31" },
+          { culture: "Concombre", début: "2023-06-01", fin: "2023-08-31" }
+        ];
+        setPlantingData(exempleDonneesPlantation);
+      });
+  }, [lat, lng]);
 
-    const marginPlanting = { top: 20, right: 30, bottom: 40, left: 40 };
-    const widthPlanting = 800 - marginPlanting.left - marginPlanting.right;
-    const heightPlanting = 400 - marginPlanting.top - marginPlanting.bottom;
+  useEffect(() => {
+    if (plantingData.length === 0) return;
 
-    const cultures = [...new Set(data.map(d => d.culture))];
+    const svgPlantation = d3.select(plantingChartRef.current);
+    svgPlantation.selectAll("*").remove();
 
-    const xPlanting = d3.scaleTime()
+    const margePlantation = { haut: 20, droit: 30, bas: 40, gauche: 40 };
+    const largeurPlantation = 800 - margePlantation.gauche - margePlantation.droit;
+    const hauteurPlantation = 400 - margePlantation.haut - margePlantation.bas;
+
+    const cultures = [...new Set(plantingData.map(d => d.culture))];
+
+    const xPlantation = d3.scaleTime()
       .domain([new Date(2023, 0, 1), new Date(2023, 11, 31)])
-      .range([0, widthPlanting]);
+      .range([0, largeurPlantation]);
 
-    const yPlanting = d3.scaleBand()
+    const yPlantation = d3.scaleBand()
       .domain(cultures)
-      .range([0, heightPlanting])
+      .range([0, hauteurPlantation])
       .padding(0.1);
 
-    const xAxisPlanting = g => g
-      .attr("transform", `translate(0,${heightPlanting})`)
-      .call(d3.axisBottom(xPlanting).tickFormat(d3.timeFormat("%B")));
+    const axeXPlantation = g => g
+      .attr("transform", `translate(0,${hauteurPlantation})`)
+      .call(d3.axisBottom(xPlantation).tickFormat(date => date.toLocaleDateString('fr-FR', { month: 'long' })));
 
-    const yAxisPlanting = g => g
-      .call(d3.axisLeft(yPlanting));
+    const axeYPlantation = g => g
+      .call(d3.axisLeft(yPlantation));
 
-    const plantingG = svgPlanting.append("g")
-      .attr("transform", `translate(${marginPlanting.left},${marginPlanting.top})`);
+    const plantationG = svgPlantation.append("g")
+      .attr("transform", `translate(${margePlantation.gauche},${margePlantation.haut})`);
 
-    plantingG.append("g")
-      .attr("class", "x-axis")
-      .call(xAxisPlanting);
+    plantationG.append("g")
+      .attr("class", "axe-x")
+      .attr("fill", "#69b3a2")
+      .call(axeXPlantation);
 
-    plantingG.append("g")
-      .attr("class", "y-axis")
-      .call(yAxisPlanting);
+    plantationG.append("g")
+      .attr("class", "axe-y")
+      .attr("fill", "#69b3a2")
+      .call(axeYPlantation);
 
     cultures.forEach(culture => {
-      const cultureData = data.filter(d => d.culture === culture);
-      cultureData.forEach(period => {
-        plantingG.append("line")
-          .attr("x1", xPlanting(new Date(period.start)))
-          .attr("x2", xPlanting(new Date(period.end)))
-          .attr("y1", yPlanting(culture) + yPlanting.bandwidth() / 2)
-          .attr("y2", yPlanting(culture) + yPlanting.bandwidth() / 2)
-          .attr("stroke", "green")
+      const donnéesCulture = plantingData.filter(d => d.culture === culture);
+      donnéesCulture.forEach(période => {
+        const ligne = plantationG.append("line")
+          .attr("x1", xPlantation(new Date(période.début)))
+          .attr("x2", xPlantation(new Date(période.début))) // Commence avec x2 égal à x1 pour l'animation
+          .attr("y1", yPlantation(culture) + yPlantation.bandwidth() / 2)
+          .attr("y2", yPlantation(culture) + yPlantation.bandwidth() / 2)
+          .attr("stroke", "rgb(0, 255, 26)")
           .attr("stroke-width", 7);
+
+        ligne.transition()
+          .duration(1000)
+          .attr("x2", xPlantation(new Date(période.fin))); // Anime jusqu'à la position finale de x2
       });
     });
-  }, [data]);
+  }, [plantingData]);
 
   return (
     <div className='transparent'>

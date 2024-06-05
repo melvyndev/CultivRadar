@@ -1,4 +1,3 @@
-// components/HumidityChart.js
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import axios from 'axios';
@@ -22,31 +21,39 @@ const HumidityChart = ({ lat, lng }) => {
   useEffect(() => {
     if (forecast.length === 0) return;
 
-    // Map forecast data to the format required for the chart
-    const data = forecast.map(entry => ({
-      date: new Date(entry.dt_txt),
-      humidity: entry.main.humidity
-    }));
+    // Aggregating data by day
+    const aggregatedData = d3.rollup(forecast, v => ({
+      humidity: d3.mean(v, d => d.main.humidity)
+    }), d => d3.timeDay.floor(new Date(d.dt_txt)));
+
+    // Transforming aggregated data to an array
+    const aggregatedArray = Array.from(aggregatedData, ([day, { humidity }]) => ({ day, humidity }));
+
+    // Sort days
+    aggregatedArray.sort((a, b) => new Date(a.day) - new Date(b.day));
+
+    console.log('Aggregated Data:', aggregatedArray);
 
     const svgHumidity = d3.select(humidityChartRef.current);
     svgHumidity.selectAll("*").remove();
 
-    const marginHumidity = { top: 20, right: 30, bottom: 40, left: 40 };
+    const marginHumidity = { top: 20, right: 30, bottom: 70, left: 40 };
     const widthHumidity = 800 - marginHumidity.left - marginHumidity.right;
     const heightHumidity = 400 - marginHumidity.top - marginHumidity.bottom;
 
-    const xHumidity = d3.scaleTime()
-      .domain(d3.extent(data, d => d.date))
-      .range([0, widthHumidity]);
+    const xHumidity = d3.scaleBand()
+      .domain(aggregatedArray.map(d => d3.timeFormat("%d/%m")(d.day)))
+      .range([0, widthHumidity])
+      .padding(0.1);
 
     const yHumidity = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.humidity)])
+      .domain([0, d3.max(aggregatedArray, d => d.humidity)])
       .nice()
       .range([heightHumidity, 0]);
 
     const xAxisHumidity = g => g
       .attr("transform", `translate(0,${heightHumidity})`)
-      .call(d3.axisBottom(xHumidity).tickFormat(d3.timeFormat("%b %d")));
+      .call(d3.axisBottom(xHumidity));
 
     const yAxisHumidity = g => g
       .call(d3.axisLeft(yHumidity).tickFormat(d => `${d}%`));
@@ -56,25 +63,30 @@ const HumidityChart = ({ lat, lng }) => {
 
     barHumidity.append("g")
       .attr("class", "x-axis")
-      .call(xAxisHumidity);
+      .call(xAxisHumidity)
+      .selectAll("text")
+      .attr("transform", "rotate(-45)")
+      .style("text-anchor", "end");
 
     barHumidity.append("g")
       .attr("class", "y-axis")
       .call(yAxisHumidity);
 
-    barHumidity.selectAll(".bar")
-      .data(data)
+    const bars = barHumidity.selectAll(".bar")
+      .data(aggregatedArray)
       .enter().append("rect")
       .attr("class", "bar neon-bar")
-      .attr("x", d => xHumidity(d.date))
-      .attr("y", d => yHumidity(d.humidity))
-      .attr("width", xHumidity.bandwidth ? xHumidity.bandwidth() : 10) // adjust the width for time scale
-      .attr("height", d => heightHumidity - yHumidity(d.humidity))
-      .attr("title", d => `${d.humidity}%`)
-      .transition()
-      .duration(1000)
+      .attr("x", d => xHumidity(d3.timeFormat("%d/%m")(d.day)))
+      .attr("width", xHumidity.bandwidth())
+      .attr("fill", "#69b3a2")
+      .attr("y", yHumidity(0))
+      .attr("height", 0);
+
+    bars.transition()
+      .duration(1500)
       .attr("y", d => yHumidity(d.humidity))
       .attr("height", d => heightHumidity - yHumidity(d.humidity));
+
   }, [forecast]);
 
   return (

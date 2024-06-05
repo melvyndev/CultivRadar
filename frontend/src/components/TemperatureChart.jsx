@@ -1,4 +1,3 @@
-// components/TemperatureChart.js
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import axios from 'axios';
@@ -17,35 +16,33 @@ const TemperatureChart = ({ lat, lng }) => {
       }
     };
     fetchForecast();
-  }, [lat, lng]); // Dependency on lat and lng
+  }, [lat, lng]);
 
   useEffect(() => {
     if (forecast.length === 0) return;
 
-    // Aggregating data by week
+    // Aggregating data by day
     const aggregatedData = d3.rollup(forecast, v => ({
       temp: d3.mean(v, d => d.main.temp)
-    }), d => {
-      const date = new Date(d.dt_txt);
-      const week = d3.timeWeek(date);
-      return week;
-    });
+    }), d => d3.timeDay.floor(new Date(d.dt_txt)));
 
     // Transforming aggregated data to an array
-    const aggregatedArray = Array.from(aggregatedData, ([week, { temp }]) => ({ week, temp }));
+    const aggregatedArray = Array.from(aggregatedData, ([day, { temp }]) => ({ day, temp }));
 
-    console.log('Aggregated Data:', aggregatedArray); // Log the aggregated data
+    // Sort days
+    aggregatedArray.sort((a, b) => new Date(a.day) - new Date(b.day));
+
+    console.log('Aggregated Data:', aggregatedArray);
 
     const svgTemp = d3.select(tempChartRef.current);
     svgTemp.selectAll("*").remove();
 
-    const marginTemp = { top: 20, right: 30, bottom: 40, left: 40 };
+    const marginTemp = { top: 20, right: 30, bottom: 70, left: 40 };
     const widthTemp = 800 - marginTemp.left - marginTemp.right;
     const heightTemp = 400 - marginTemp.top - marginTemp.bottom;
 
-    const weeks = aggregatedArray.map(d => d3.timeFormat("%Y-%W")(d.week));
     const xTemp = d3.scaleBand()
-      .domain(weeks)
+      .domain(aggregatedArray.map(d => d3.timeFormat("%d/%m")(d.day)))
       .range([0, widthTemp])
       .padding(0.1);
 
@@ -66,26 +63,31 @@ const TemperatureChart = ({ lat, lng }) => {
 
     barTemp.append("g")
       .attr("class", "x-axis")
-      .call(xAxisTemp);
+      .call(xAxisTemp)
+      .selectAll("text")
+      .attr("transform", "rotate(-45)")
+      .style("text-anchor", "end");
 
     barTemp.append("g")
       .attr("class", "y-axis")
       .call(yAxisTemp);
 
-    barTemp.selectAll(".bar")
+    const bars = barTemp.selectAll(".bar")
       .data(aggregatedArray)
       .enter().append("rect")
       .attr("class", "bar neon-bar")
-      .attr("x", d => xTemp(d3.timeFormat("%Y-%W")(d.week)))
-      .attr("y", d => yTemp(d.temp))
+      .attr("x", d => xTemp(d3.timeFormat("%d/%m")(d.day)))
       .attr("width", xTemp.bandwidth())
-      .attr("height", d => heightTemp - yTemp(d.temp))
-      .attr("title", d => `${d.temp}°C`)
-      .transition()
-      .duration(1000)
+      .attr("fill", "#69b3a2")
+      .attr("y", yTemp(0))
+      .attr("height", 0);
+
+    bars.transition()
+      .duration(1500)
       .attr("y", d => yTemp(d.temp))
       .attr("height", d => heightTemp - yTemp(d.temp));
-  }, [forecast]); // Dependency on forecast
+
+  }, [forecast]);
 
   return (
     <div>
