@@ -36,7 +36,11 @@ const Nav = () => {
                                 <Link className="dropdown-item" to="/weather-forecast/long-term">Prévisions à long terme</Link>
                             </div>
                         </li>
-                        {/* Add other menu items... */}
+                        <li className="nav-item dropdown">
+                            <Link className="nav-link dropdown-toggle" to="/plants" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Les plantes
+                            </Link>           
+                        </li>
                     </ul>
                 </div>
             </div>
