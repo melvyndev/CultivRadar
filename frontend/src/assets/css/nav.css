@@ -1,5 +1,35 @@
+/* custom.css */
 
-  .navbar-brand > img{
-    border: 1px solid #cfffe1;
-    border-radius: 10rem;
-  }
+.navbar {
+  background-color: #6ab04c; /* Couleur verte douce */
+}
+
+.navbar-brand img {
+  border-radius: 3rem;
+}
+
+.nav-link {
+  color: #fff !important;
+}
+
+.nav-link:hover {
+  color: #f6e58d !important; /* Couleur jaune pâle */
+}
+
+.dropdown-menu {
+  background-color: #badc58; /* Vert clair pour les dropdowns */
+}
+
+.dropdown-item {
+  color: #fff !important;
+}
+
+.dropdown-item:hover {
+  background-color: #f9ca24 !important; /* Jaune clair */
+  color: #000 !important;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23fff' stroke-width='2' linecap='round' linejoin='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+

@@ -43,7 +43,7 @@ const RadarChart = ({ data }) => {
         .style('stroke-dasharray', '2,2')
         .style('opacity', 0.75)
         .transition()
-        .duration(2000)
+        .duration(3000)
         .attr('r', levelFactor);
     }
 
