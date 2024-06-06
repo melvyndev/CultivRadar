@@ -14,12 +14,6 @@ import WeatherComponent from '../components/WeatherComponent';
 
 const Visualization = () => {
   const { lat, lng } = useParams();
-  const [forecast, setForecast] = useState([]);
-  const [plantingData, setPlantingData] = useState([]);
-  const tempChartRef = useRef();
-  const humidityChartRef = useRef();
-  const plantingChartRef = useRef();
-
  
   return (
     <main className="flex-shrink-0 bg-plant">

@@ -9,22 +9,36 @@ import Badge from 'react-bootstrap/Badge';
 import axios from 'axios';
 
 const List = ({ lat,lng }) => {
-
   const [plants, setPlants] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+
   useEffect(() => {
     const fetchPlants = async () => {
     
     // Fetch plants data
     axios.get(`http://127.0.0.1:8000/api/plants/${lat}/${lng}`)
       .then(response => {
-        console.log('Plants data fetched:', response.data);
-        setPlants(response.data);
+
+        setTimeout(() => {
+          setPlants(response.data);
+          setLoading(false);
+        }, 3000);       
       })
       .catch(error => {
+        setLoading(false);  // Arrête le chargement en cas d'erreur
         console.error('Error fetching plants data:', error);
       });
     };
     fetchPlants();  }, [plants]);
+
+    if (loading) {
+      return (
+        <div className='transparent p-3'>
+          <img width={200} src={require('../assets/images/loading.gif')} alt="chargement" />
+        </div>
+      );
+    }
   return (
     <div>
       <Box className="transparent" sx={{ width: '100%', height: 400, maxWidth: 360, bgcolor: 'background.paper' }}>

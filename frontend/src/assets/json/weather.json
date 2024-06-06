@@ -1,0 +1,47 @@
+{
+    "clear sky": {
+      "description_fr": "ciel dégagé",
+      "icon": "01d.png"
+    },
+    "few clouds": {
+      "description_fr": "quelques nuages",
+      "icon": "01d.png"
+
+    },
+    "scattered clouds": {
+      "description_fr": "nuages épars",
+      "icon": "01d.png"
+
+    },
+    "broken clouds": {
+      "description_fr": "nuages fragmentés",
+      "icon": "01d.png"
+
+    },
+    "shower rain": {
+      "description_fr": "averses",
+      "icon": "01d.png"
+
+    },
+    "rain": {
+      "description_fr": "pluie",
+      "icon": "01d.png"
+
+    },
+    "thunderstorm": {
+      "description_fr": "orage",
+      "icon": "01d.png"
+
+    },
+    "snow": {
+      "description_fr": "neige",
+      "icon": "01d.png"
+
+    },
+    "mist": {
+      "description_fr": "brouillard",
+      "icon": "01d.png"
+
+    }
+  }
+  

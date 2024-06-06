@@ -9,6 +9,7 @@ import RadarChart from '../components/RadarChart';
 function DetailPlant() {
     const [plant, setPlant] = useState({});
     const { id } = useParams();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/plants/${id}`)
@@ -28,10 +29,9 @@ function DetailPlant() {
             <div className="container py-4">
                 <div className='row'>
                     <div className='col-md-6'>
-                    <h1>Détails de la plante</h1>
         <div className="plant-details">
             <img
-                src={`http://127.0.0.1:8000/${plant.image}`}
+                src={`http://127.0.0.1:8000/${plant.image}`? require('../assets/images/loading.gif'):`http://127.0.0.1:8000/${plant.image}`}
                 alt={plant.common_name}
                 className="plant-image"
             />
@@ -58,7 +58,7 @@ function DetailPlant() {
               <RadarChart data={[
                 { criteria: "Lummiere", value: 5 },
                 { criteria: "Eau", value: 3 },
-                { criteria: "Sol", value: 4 },
+                { criteria: "Sol", value: plant.soil_ph },
                 { criteria: "pH", value: 2 },
                 { criteria: "Temperature", value: 4 }
               ]} />
