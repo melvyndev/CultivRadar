@@ -22,22 +22,32 @@ const Visualization = () => {
       <div className="container py-4">
         <div className="row">
           <div className="col-md-6">
+          <div className='py-3'>
           <WeatherConditions lat={lat}  lng={lng}  />
+          </div>
 
           </div>
           <div className="col-12 col-md-6">
+          <div className='py-3'>
             <List  lat={lat}  lng={lng} />
+            </div>
           </div>
         </div>
         <div className="row">
           <div className="col-10">
+            <div className='py-3'>
             <TemperatureChart  lat={lat}  lng={lng} />
+            </div>
           </div>
           <div className="col-10">
+          <div className='py-3'>
               <HumidityChart  lat={lat}  lng={lng} />
+              </div>
           </div>
         <div className='col-12'>
+        <div className='py-3'>
           <WeatherComponent />
+          </div>
         </div>
         </div>
       </div>

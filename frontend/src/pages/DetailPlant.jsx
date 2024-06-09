@@ -31,7 +31,7 @@ function DetailPlant() {
                     <div className='col-md-6'>
         <div className="plant-details">
             <img
-                src={`http://127.0.0.1:8000/${plant.image}`? require('../assets/images/loading.gif'):`http://127.0.0.1:8000/${plant.image}`}
+                src={`http://127.0.0.1:8000/${plant.image}`? require('../assets/images/gardening.png'):`http://127.0.0.1:8000/${plant.image}`}
                 alt={plant.common_name}
                 className="plant-image"
             />
