@@ -11,6 +11,20 @@ mix.js('resources/js/app.js', 'public/js')
 
 // Configuration supplémentaire de Webpack
 mix.webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                    },
+                },
+            },
+        ],
+    },
     resolve: {
         extensions: ['.js', '.json', '.wasm', '.mjs', '.jsx', '.scss'],
     },
