@@ -44,11 +44,7 @@ const Visualization = () => {
               <HumidityChart  lat={lat}  lng={lng} />
               </div>
           </div>
-        <div className='col-12'>
-        <div className='py-3'>
-          <WeatherComponent />
-          </div>
-        </div>
+      
         </div>
       </div>
     </main>

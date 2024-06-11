@@ -27,38 +27,22 @@ class PlantController extends Controller
 
     }
 
-    public function getPlantsByLocation($latitude, $longitude)
+    public function getPlantsByLocation($latitude, $longitude, $averageTemperature, $averageHumidity )
     {
-        $apiKey = '3a6ee895a099497f0ac5d5fa99e903bb';
-
-        $response = Http::get('https://api.openweathermap.org/data/2.5/weather', [
-            'lat' => $latitude,
-            'lon' => $longitude,
-            'appid' => $apiKey,
-            'units' => 'metric',
-        ]);
-
-        if ($response->successful()) {
-            $weatherData = $response->json();
-
-            $currentTemperature = $weatherData['main']['temp'];
-            $currentHumidity = $weatherData['main']['humidity'];
+      
 
             $inWater = $this->isLocationInWater($latitude, $longitude);
 
             if ($inWater) {
                 $plants = null;
             } else {
-                $plants = Plant::where('temperature_min', '<=', $currentTemperature)
-                    ->where('temperature_max', '>=', $currentTemperature)
-                    ->where('humidity_min', '<=', $currentHumidity)
-                    ->where('humidity_max', '>=', $currentHumidity)
+                $plants = Plant::where('temperature_min', '<=', $averageTemperature)
+                    ->where('temperature_max', '>=', $averageTemperature)
+                    ->where('humidity_min', '<=', $averageHumidity)
+                    ->where('humidity_max', '>=', $averageHumidity)
                     ->get();
             }
-        } else {
-            $plants = null;
-        }
-
+      
         return response()->json($plants);
     }
 

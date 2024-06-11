@@ -32,7 +32,6 @@ const TemperatureChart = ({ lat, lng }) => {
     // Sort days
     aggregatedArray.sort((a, b) => new Date(a.day) - new Date(b.day));
 
-    console.log('Aggregated Data:', aggregatedArray);
 
     const svgTemp = d3.select(tempChartRef.current);
     svgTemp.selectAll("*").remove();

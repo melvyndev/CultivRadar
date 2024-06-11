@@ -6,13 +6,14 @@ import L from 'leaflet';
 import axios from 'axios';
 import pins from '../assets/images/pins.png';
 import { Link } from "react-router-dom";
+import weatherData from "../assets/json/weather.json";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: pins,
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-  iconSize:     [50], // size of the icon
+  iconSize: [50], // size of the icon
 });
 
 const Home = () => {
@@ -57,7 +58,7 @@ const Home = () => {
             }
           });
           setMarkerWeather(response.data);
-console.log(response.data);
+          console.log(response.data);
           // Ouvrir la popup après avoir reçu les données météo
           if (markerRef.current) {
             markerRef.current.openPopup();
@@ -89,10 +90,9 @@ console.log(response.data);
                   <h5>Météo à la position cliquée</h5>
                   <p>Température : {markerWeather.main.temp}°C</p>
                   <p>Humidité : {markerWeather.main.humidity}%</p>
-                  <p>Conditions : {markerWeather.weather[0].description}</p>
+                  <p>Conditions : {weatherData.weatherTraduction[markerWeather.weather[0].description]?.description_fr || 'Description non disponible'}</p>
                   <p>Pression : {markerWeather.main.pressure}hPa</p>
-                  <Link className="btn btn-outline-success" to={'/visualisation/' + markerPosition[0] + '/' + markerPosition[1] + '/'}>Commencer à cultivé</Link>
-                
+                  <Link className="btn btn-outline-success" to={`/visualisation/${markerPosition[0]}/${markerPosition[1]}/`}>Commencer à cultivé</Link>
                 </div>
               ) : (
                 <p>Chargement des données météo...</p>

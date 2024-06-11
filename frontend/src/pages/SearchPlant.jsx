@@ -34,10 +34,10 @@ const SearchPlant = ({ lat, lng }) => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/plants/${searchValue}`);
+      const response = await axios.get(`http://127.0.0.1:8000/api/plants/search/${searchValue}`);
       setPlants(Array.isArray(response.data) ? response.data : []);
       if (response.data.length === 0) {
-        setError('No plants found.');
+        setError('Aucune plante correspondante');
       }
     } catch (error) {
       console.error('Error searching plants:', error);
@@ -49,7 +49,7 @@ const SearchPlant = ({ lat, lng }) => {
 
   if (loading) {
     return (
-      <div className='transparent p-3'>
+      <div className='text-center p-3'>
         <img width={200} src={require('../assets/images/loading.gif')} alt="Loading" />
       </div>
     );
@@ -60,38 +60,35 @@ const SearchPlant = ({ lat, lng }) => {
       <Nav />
       <div className='row'>
         <div className='col-3'>
-          <div id="sidenav-3" className="sidenav" style={{ backgroundColor: '#F5F5F5', padding: '20px', borderRadius: '10px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
+          <div id="sidenav-3" className="sidenav bg-light p-3 rounded shadow-sm">
             <div className="text-center">
-              <h4 style={{ marginTop: '10px', marginBottom: '0' }}>Recherche</h4>
+              <h4 className="my-2">Recherche</h4>
             </div>
-            <hr className="mt-2 mb-2" />
+            <hr className="my-2" />
             <form onSubmit={handleSubmit}>
-              <div className="form-outline mb-4" data-mdb-input-init>
-                <input type="search" className="form-control" id="datatable-search-input" placeholder="Pomme..." value={searchValue} onChange={handleSearchChange} style={{ borderRadius: '20px' }} />
+              <div className="form-outline mb-4">
+                <input type="search" className="form-control rounded-pill" id="datatable-search-input" placeholder="Pomme..." value={searchValue} onChange={handleSearchChange} />
               </div>
-              <button type="submit" className="btn btn-success w-100" style={{ borderRadius: '20px' }}>Valider</button>
+              <button type="submit" className="btn btn-success w-100 rounded-pill">Valider</button>
             </form>
           </div>
         </div>
 
         <div className='col-9'>
-          <div className="main-content" style={{ backgroundColor: '#f0f4f3', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+          <div className="main-content bg-light p-4 rounded shadow-sm">
             {error && <div className="alert alert-danger" role="alert">{error}</div>}
-            <div id="datatable" style={{ maxHeight: '400px', overflowY: 'auto', backgroundColor: '#ffffff', borderRadius: '8px', padding: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+            <div id="datatable" className="table-responsive bg-white rounded p-3 shadow-sm" style={{ maxHeight: '400px', overflowY: 'auto' }}>
               {plants.length > 0 ? plants.map((plant, index) => (
-                <div key={index} className="mb-2" style={{ borderBottom: '1px solid #e0e0e0', padding: '10px 0' }}>
-                  <Link to={`/detail-plant/${plant.id}`} state={{ plant: plant }} style={{ textDecoration: 'none', color: '#333', width: '100%' }}>
-                    <div className="d-flex align-items-center">
-                    <img width={50}
-                src={`http://127.0.0.1:8000/${plant.image}`? require('../assets/images/gardening.png'):`http://127.0.0.1:8000/${plant.image}`}
-                alt={plant.common_name}            />                      <div style={{ flexGrow: 1 }}>
-                        <div style={{ color: '#4caf50', fontWeight: 'bold' }}>{plant.scientific_name}</div>
-                        <div style={{ color: '#757575' }}>{plant.common_name}</div>
-                      </div>
+                <div key={index} className="mb-2 border-bottom pb-2">
+                  <Link to={`/detail-plant/${plant.id}`} state={{ plant: plant }} className="text-decoration-none text-dark d-flex align-items-center">
+                    <img width={50} src={`http://127.0.0.1:8000/${plant.image}`} onError={(e) => { e.target.src = require('../assets/images/gardening.png'); }} alt={plant.common_name} className="me-3" />
+                    <div>
+                      <div className="text-success fw-bold">{plant.scientific_name}</div>
+                      <div className="text-muted">{plant.common_name}</div>
                     </div>
                   </Link>
                 </div>
-              )) : <div>No plants found.</div>}
+              )) : <div>Aucune plante correspondante.</div>}
             </div>
           </div>
         </div>

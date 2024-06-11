@@ -32,7 +32,6 @@ const HumidityChart = ({ lat, lng }) => {
     // Sort days
     aggregatedArray.sort((a, b) => new Date(a.day) - new Date(b.day));
 
-    console.log('Aggregated Data:', aggregatedArray);
 
     const svgHumidity = d3.select(humidityChartRef.current);
     svgHumidity.selectAll("*").remove();

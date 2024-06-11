@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import weatherData from "../assets/json/weather.json";
 
 function WeatherConditions({ lat, lng }) {
   const [weather, setWeather] = useState(null);
@@ -31,11 +32,11 @@ function WeatherConditions({ lat, lng }) {
   }
 
   return (
-    <div className='transparent p-3'>
+    <div className='p-3'>
       <h2>Conditions Météorologiques</h2>
       <p><img width={40} src={require('../assets/images/temperature.gif')} alt="température" /> Température : {weather.main.temp}°C</p>
       <p><img width={40} src={require('../assets/images/humidity.gif')} alt="humidité" /> Humidité : {weather.main.humidity}%</p>
-      <p><img width={40} src={require('../assets/images/clouds.gif')} alt="nuage" /> Conditions : {weather.weather[0].description}</p>
+      <p><img width={40} src={require('../assets/images/clouds.gif')} alt="nuage" /> Conditions : {weatherData.weatherTraduction[weather.weather[0].description]?.description_fr || 'Description non disponible'}</p>
     </div>
   );
 }

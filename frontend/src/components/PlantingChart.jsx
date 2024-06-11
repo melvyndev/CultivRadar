@@ -10,7 +10,6 @@ const PlantingChart = ({ lat, lng }) => {
     // Récupération des données sur les périodes de plantation
     axios.get(`http://127.0.0.1:8000/api/planting/${lat}/${lng}`)
       .then(response => {
-        console.log('Données sur les périodes de plantation récupérées:', response.data);
         setPlantingData(response.data);
       })
       .catch(error => {
@@ -87,7 +86,7 @@ const PlantingChart = ({ lat, lng }) => {
   }, [plantingData]);
 
   return (
-    <div className='transparent'>
+    <div className='p-3'>
       <h2>Graphique en Courbes de Périodes de Plantation</h2>
       <svg ref={plantingChartRef} width={800} height={400}></svg>
     </div>

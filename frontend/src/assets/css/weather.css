@@ -1,13 +1,134 @@
-/* Ajoutez votre style CSS ici */
-.background {
-    background-color: #0F2027;
-    background-image: linear-gradient(to top, #0F2027 0%, #203A43 100%);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+@import url('https://fonts.googleapis.com/css?family=Lato:300');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css');
+
+:root {
+  --speed: 2s;
 }
 
 
+nav ul {
+  margin: 20px 20px 0 20px;
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+}
 
-/* Ajoutez le reste de votre style ici */
+nav li button {
+  display: block;
+  width: 50px;
+  text-align: center;
+  color: #aaa;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+nav li button:hover,
+nav li button:active,
+nav li button.active {
+  color: #333;
+}
+
+.weather {
+  margin: 20px;
+  padding: 20px;
+  position: relative;
+  width: 300px;
+  height: 200px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  background: linear-gradient(120deg, rgba(0, 200, 100, 0.1), rgba(0, 0, 100, 0.1));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.weather .details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.weather .temp {
+  font-size: 4rem;
+  color: #333;
+}
+
+.weather .temp span {
+  font-size: 2rem;
+  vertical-align: super;
+}
+
+.weather .right {
+  text-align: right;
+}
+
+.weather #date {
+  font-size: 1.5rem;
+  color: #666;
+}
+
+.weather #summary {
+  font-size: 1rem;
+  color: #999;
+}
+
+.weather.snow {
+  background-color: #E0F7FA;
+}
+
+.weather.rain {
+  background-color: #E3F2FD;
+}
+
+.weather.wind {
+  background-color: #E0E0E0;
+}
+
+.weather.thunder {
+  background-color: #D8D8D8;
+}
+
+.weather.sun {
+  background-color: #ccccff;
+}
+
+.weather #inner {
+  background-color: rgba(255,255,255,1);
+  background: linear-gradient(to bottom, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
+}
+
+.weather .cloud {
+  transition: fill var(--speed) ease;
+}
+
+.weather .cloud #cloud1 {
+  fill: #efefef;
+}
+
+.weather.thunder .cloud #cloud1 {
+  fill: #9FA4AD;
+}
+
+.weather .cloud #cloud2 {
+  fill: #E6E6E6;
+}
+
+.weather.thunder .cloud #cloud2 {
+  fill: #8B8E98;
+}
+
+.weather .cloud #cloud3 {
+  fill: #D5D5D5;
+}
+
+.weather.thunder .cloud #cloud3 {
+  fill: #7B7988;
+}
+
+#outer, #back {
+  position: fixed;
+  pointer-events: none;
+}
