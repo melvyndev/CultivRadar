@@ -32,3 +32,30 @@
     border-radius: 8px;
     background-color: #fff;
 }
+
+.plant-image {
+    width: 100%;
+    height: auto;
+}
+
+.plant-info {
+    padding: 1rem 0;
+}
+
+@media (max-width: 768px) {
+    .plant-details, .plant-info {
+        text-align: center;
+    }
+}
+
+.p-3 {
+    padding: 1rem;
+  }
+  
+  .p-3 svg {
+    width: 100%;
+    height: auto;
+  }
+  
+
+  

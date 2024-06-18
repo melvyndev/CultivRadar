@@ -21,6 +21,13 @@ const TemperatureChart = ({ lat, lng }) => {
   useEffect(() => {
     if (forecast.length === 0) return;
 
+    const svgTemp = d3.select(tempChartRef.current);
+    svgTemp.selectAll("*").remove();
+
+    const marginTemp = { top: 20, right: 30, bottom: 70, left: 40 };
+    const widthTemp = svgTemp.node().parentNode.clientWidth - marginTemp.left - marginTemp.right;
+    const heightTemp = 400 - marginTemp.top - marginTemp.bottom;
+
     // Aggregating data by day
     const aggregatedData = d3.rollup(forecast, v => ({
       temp: d3.mean(v, d => d.main.temp)
@@ -31,14 +38,6 @@ const TemperatureChart = ({ lat, lng }) => {
 
     // Sort days
     aggregatedArray.sort((a, b) => new Date(a.day) - new Date(b.day));
-
-
-    const svgTemp = d3.select(tempChartRef.current);
-    svgTemp.selectAll("*").remove();
-
-    const marginTemp = { top: 20, right: 30, bottom: 70, left: 40 };
-    const widthTemp = 800 - marginTemp.left - marginTemp.right;
-    const heightTemp = 400 - marginTemp.top - marginTemp.bottom;
 
     const xTemp = d3.scaleBand()
       .domain(aggregatedArray.map(d => d3.timeFormat("%d/%m")(d.day)))
@@ -71,6 +70,16 @@ const TemperatureChart = ({ lat, lng }) => {
       .attr("class", "y-axis")
       .call(yAxisTemp);
 
+    const tooltip = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("position", "absolute")
+      .style("background", "#fff")
+      .style("padding", "5px")
+      .style("border", "1px solid #ccc")
+      .style("border-radius", "5px")
+      .style("pointer-events", "none")
+      .style("display", "none");
+
     const bars = barTemp.selectAll(".bar")
       .data(aggregatedArray)
       .enter().append("rect")
@@ -79,19 +88,45 @@ const TemperatureChart = ({ lat, lng }) => {
       .attr("width", xTemp.bandwidth())
       .attr("fill", "#69b3a2")
       .attr("y", yTemp(0))
-      .attr("height", 0);
+      .attr("height", 0)
+      .on("mouseover", (event, d) => {
+        tooltip.style("display", "block")
+          .html(`Temp: ${d.temp.toFixed(2)}°C`)
+          .style("left", `${event.pageX + 5}px`)
+          .style("top", `${event.pageY - 28}px`);
+      })
+      .on("mouseout", () => {
+        tooltip.style("display", "none");
+      });
 
     bars.transition()
       .duration(1500)
       .attr("y", d => yTemp(d.temp))
       .attr("height", d => heightTemp - yTemp(d.temp));
 
+    // Responsive resize
+    const handleResize = () => {
+      const width = svgTemp.node().parentNode.clientWidth - marginTemp.left - marginTemp.right;
+      xTemp.range([0, width]);
+      svgTemp.attr("width", width + marginTemp.left + marginTemp.right);
+      barTemp.select(".x-axis").call(xAxisTemp);
+      bars.attr("x", d => xTemp(d3.timeFormat("%d/%m")(d.day)))
+          .attr("width", xTemp.bandwidth());
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      tooltip.remove();
+    };
   }, [forecast]);
 
   return (
     <div>
       <h2>Histogramme de Température</h2>
-      <svg ref={tempChartRef} width={800} height={400}></svg>
+      <svg ref={tempChartRef} width="100%" height={400}></svg>
     </div>
   );
 };

@@ -108,3 +108,6 @@ body {
     font-size: 10px;
   }
 
+.radar-chart > svg {
+ margin-bottom: auto;
+}

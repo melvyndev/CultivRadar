@@ -29,8 +29,6 @@ const Navigation = () => {
                         </NavDropdown>
                         <NavDropdown title={<span> Prévisions Météorologiques</span>} id="weather-forecast-dropdown" className="nav-link">
                             <NavDropdown.Item as={Link} to="/weather-forecast/current">Météo actuelle</NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/weather-forecast/short-term">Prévisions à court terme</NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/weather-forecast/long-term">Prévisions à long terme</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<span> Les plantes</span>} id="plants-dropdown" className="nav-link">
                             <NavDropdown.Item as={Link} to="/plants">Toutes les plantes</NavDropdown.Item>

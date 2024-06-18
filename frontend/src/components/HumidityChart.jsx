@@ -21,6 +21,13 @@ const HumidityChart = ({ lat, lng }) => {
   useEffect(() => {
     if (forecast.length === 0) return;
 
+    const svgHumidity = d3.select(humidityChartRef.current);
+    svgHumidity.selectAll("*").remove();
+
+    const marginHumidity = { top: 20, right: 30, bottom: 70, left: 40 };
+    const widthHumidity = svgHumidity.node().parentNode.clientWidth - marginHumidity.left - marginHumidity.right;
+    const heightHumidity = 400 - marginHumidity.top - marginHumidity.bottom;
+
     // Aggregating data by day
     const aggregatedData = d3.rollup(forecast, v => ({
       humidity: d3.mean(v, d => d.main.humidity)
@@ -31,14 +38,6 @@ const HumidityChart = ({ lat, lng }) => {
 
     // Sort days
     aggregatedArray.sort((a, b) => new Date(a.day) - new Date(b.day));
-
-
-    const svgHumidity = d3.select(humidityChartRef.current);
-    svgHumidity.selectAll("*").remove();
-
-    const marginHumidity = { top: 20, right: 30, bottom: 70, left: 40 };
-    const widthHumidity = 800 - marginHumidity.left - marginHumidity.right;
-    const heightHumidity = 400 - marginHumidity.top - marginHumidity.bottom;
 
     const xHumidity = d3.scaleBand()
       .domain(aggregatedArray.map(d => d3.timeFormat("%d/%m")(d.day)))
@@ -71,6 +70,16 @@ const HumidityChart = ({ lat, lng }) => {
       .attr("class", "y-axis")
       .call(yAxisHumidity);
 
+    const tooltip = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("position", "absolute")
+      .style("background", "#fff")
+      .style("padding", "5px")
+      .style("border", "1px solid #ccc")
+      .style("border-radius", "5px")
+      .style("pointer-events", "none")
+      .style("display", "none");
+
     const bars = barHumidity.selectAll(".bar")
       .data(aggregatedArray)
       .enter().append("rect")
@@ -79,19 +88,45 @@ const HumidityChart = ({ lat, lng }) => {
       .attr("width", xHumidity.bandwidth())
       .attr("fill", "#69b3a2")
       .attr("y", yHumidity(0))
-      .attr("height", 0);
+      .attr("height", 0)
+      .on("mouseover", (event, d) => {
+        tooltip.style("display", "block")
+          .html(`Humidity: ${d.humidity.toFixed(2)}%`)
+          .style("left", `${event.pageX + 5}px`)
+          .style("top", `${event.pageY - 28}px`);
+      })
+      .on("mouseout", () => {
+        tooltip.style("display", "none");
+      });
 
     bars.transition()
       .duration(1500)
       .attr("y", d => yHumidity(d.humidity))
       .attr("height", d => heightHumidity - yHumidity(d.humidity));
 
+    // Responsive resize
+    const handleResize = () => {
+      const width = svgHumidity.node().parentNode.clientWidth - marginHumidity.left - marginHumidity.right;
+      xHumidity.range([0, width]);
+      svgHumidity.attr("width", width + marginHumidity.left + marginHumidity.right);
+      barHumidity.select(".x-axis").call(xAxisHumidity);
+      bars.attr("x", d => xHumidity(d3.timeFormat("%d/%m")(d.day)))
+          .attr("width", xHumidity.bandwidth());
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      tooltip.remove();
+    };
   }, [forecast]);
 
   return (
     <div>
       <h2>Histogramme taux d'Humidité</h2>
-      <svg ref={humidityChartRef} width={800} height={400}></svg>
+      <svg ref={humidityChartRef} width="100%" height={400}></svg>
     </div>
   );
 };

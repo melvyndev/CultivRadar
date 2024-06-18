@@ -1,12 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
 const RadarChart = ({ data }) => {
   const chartRef = useRef();
+  const [dimensions, setDimensions] = useState({ width: window.innerWidth-20, height: window.innerHeight-20 });
 
   useEffect(() => {
-    const width = 500;
-    const height = 500;
+    const handleResize = () => {
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const width = dimensions.width * 0.3; // Use 80% of window width
+    const height = dimensions.height * 0.7; // Use 80% of window height
     const radius = Math.min(width, height) / 2 - 50; // Added padding for labels
     const levels = 5;
     const maxValue = 5;
@@ -16,9 +25,12 @@ const RadarChart = ({ data }) => {
       .range([0, radius])
       .domain([0, maxValue]);
 
+    d3.select(chartRef.current).selectAll("*").remove(); // Clear previous chart
+
     const svg = d3.select(chartRef.current)
       .attr('width', width)
       .attr('height', height)
+      .style('overflow', 'visible') // Ensure the overflow is visible
       .append('g')
       .attr('transform', `translate(${width / 2},${height / 2})`);
 
@@ -101,9 +113,13 @@ const RadarChart = ({ data }) => {
       .ease(d3.easeLinear)
       .attr('stroke-dashoffset', 0);
 
-  }, [data]);
+  }, [data, dimensions]);
 
-  return <svg ref={chartRef}></svg>;
+  return (
+    <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <svg ref={chartRef} style={{ overflow: 'visible' }}></svg>
+    </div>
+  );
 };
 
 export default RadarChart;

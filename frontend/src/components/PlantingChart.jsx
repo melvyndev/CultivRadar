@@ -5,7 +5,11 @@ import axios from 'axios';
 const PlantingChart = ({ lat, lng }) => {
   const plantingChartRef = useRef();
   const [plantingData, setPlantingData] = useState([]);
-
+  const [dimensions, setDimensions] = useState({ width: 800, height: 400 });
+  const svgStyle = {
+    overflowX: 'auto',
+  };
+  
   useEffect(() => {
     // Récupération des données sur les périodes de plantation
     axios.get(`http://127.0.0.1:8000/api/planting/${lat}/${lng}`)
@@ -27,14 +31,26 @@ const PlantingChart = ({ lat, lng }) => {
   }, [lat, lng]);
 
   useEffect(() => {
+    const handleResize = () => {
+      const width = plantingChartRef.current.parentElement.offsetWidth;
+      const height = width * 0.5; // Adjust height based on width for responsiveness
+      setDimensions({ width, height });
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
     if (plantingData.length === 0) return;
 
     const svgPlantation = d3.select(plantingChartRef.current);
     svgPlantation.selectAll("*").remove();
 
     const margePlantation = { haut: 20, droit: 30, bas: 40, gauche: 40 };
-    const largeurPlantation = 800 - margePlantation.gauche - margePlantation.droit;
-    const hauteurPlantation = 400 - margePlantation.haut - margePlantation.bas;
+    const largeurPlantation = dimensions.width - margePlantation.gauche - margePlantation.droit;
+    const hauteurPlantation = dimensions.height - margePlantation.haut - margePlantation.bas;
 
     const cultures = [...new Set(plantingData.map(d => d.culture))];
 
@@ -83,12 +99,12 @@ const PlantingChart = ({ lat, lng }) => {
           .attr("x2", xPlantation(new Date(période.fin))); // Anime jusqu'à la position finale de x2
       });
     });
-  }, [plantingData]);
+  }, [plantingData, dimensions]);
 
   return (
-    <div className='p-3'>
+    <div className='p-3' style={{ width: '100%' }}>
       <h2>Graphique en Courbes de Périodes de Plantation</h2>
-      <svg ref={plantingChartRef} width={800} height={400}></svg>
+      <svg ref={plantingChartRef} width={dimensions.width} height={dimensions.height}></svg>
     </div>
   );
 };
