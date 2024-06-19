@@ -73,7 +73,7 @@ function DetailPlant() {
                        
                     </div>
                     <div className="col-12 mt-4">
-                        <PlantingChart lat={-20.98539601183345} lng={55.64559675115465} />
+                        <PlantingChart plantingData={plant.common_name} lat={-20.98539601183345} lng={55.64559675115465} />
                     </div>
                 </div>
             </div>

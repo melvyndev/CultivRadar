@@ -111,3 +111,20 @@ body {
 .radar-chart > svg {
  margin-bottom: auto;
 }
+
+.tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    pointer-events: none; /* Pour éviter que le tooltip ne déclenche des événements de souris */
+    opacity: 0; /* Le tooltip est initialement invisible */
+    transition: opacity 0.3s; /* Animation de transition */
+  }
+  
+  .tooltip strong {
+    font-weight: bold;
+  }
+  

@@ -1,0 +1,22 @@
+{
+    "nom": "Ananas",
+    "zones": [
+      {
+        "nom": "Zone A",
+        "pays": ["Costa Rica", "Philippines", "Inde"],
+        "periode_plantation": {
+          "début": "2023-05-01",
+          "fin": "2023-06-01"
+        }
+      },
+      {
+        "nom": "Zone B",
+        "pays": ["Brésil", "Thaïlande", "Indonésie"],
+        "periode_plantation": {
+          "début": "2023-06-01",
+          "fin": "2023-07-01"
+        }
+      }
+    ]
+  }
+  

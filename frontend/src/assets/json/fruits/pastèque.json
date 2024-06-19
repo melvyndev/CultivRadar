@@ -1,0 +1,22 @@
+{
+    "nom": "Pastèque",
+    "zones": [
+      {
+        "nom": "Zone A",
+        "pays": ["Égypte", "Inde", "États-Unis"],
+        "periode_plantation": {
+          "début": "2023-04-15",
+          "fin": "2023-05-15"
+        }
+      },
+      {
+        "nom": "Zone B",
+        "pays": ["Brésil", "Chine", "Turquie"],
+        "periode_plantation": {
+          "début": "2023-05-15",
+          "fin": "2023-06-15"
+        }
+      }
+    ]
+  }
+  

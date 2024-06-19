@@ -1,0 +1,21 @@
+{
+  "nom": "Figuier de Barbarie",
+  "zones": [
+    {
+      "nom": "Zone A",
+      "pays": ["Mexique", "Espagne", "Algérie"],
+      "periode_plantation": {
+        "début": "2023-04-01",
+        "fin": "2023-05-01"
+      }
+    },
+    {
+      "nom": "Zone B",
+      "pays": ["Brésil", "Italie", "Tunisie"],
+      "periode_plantation": {
+        "début": "2023-05-01",
+        "fin": "2023-06-01"
+      }
+    }
+  ]
+}

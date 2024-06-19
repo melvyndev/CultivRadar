@@ -1,0 +1,22 @@
+{
+    "nom": "Palmier Dattier",
+    "zones": [
+      {
+        "nom": "Zone A",
+        "pays": ["Maroc", "Arabie Saoudite", "Égypte"],
+        "periode_plantation": {
+          "début": "2023-02-01",
+          "fin": "2023-03-01"
+        }
+      },
+      {
+        "nom": "Zone B",
+        "pays": ["Émirats Arabes Unis", "Yémen", "Oman"],
+        "periode_plantation": {
+          "début": "2023-03-01",
+          "fin": "2023-04-01"
+        }
+      }
+    ]
+  }
+  

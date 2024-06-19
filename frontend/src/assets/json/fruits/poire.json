@@ -1,0 +1,22 @@
+{
+    "nom": "Poire",
+    "zones": [
+      {
+        "nom": "Zone A",
+        "pays": ["France", "États-Unis", "Chine"],
+        "periode_plantation": {
+          "début": "2023-09-01",
+          "fin": "2023-10-01"
+        }
+      },
+      {
+        "nom": "Zone B",
+        "pays": ["Argentine", "Chili", "Australie"],
+        "periode_plantation": {
+          "début": "2023-10-01",
+          "fin": "2023-11-01"
+        }
+      }
+    ]
+  }
+  
