@@ -1,0 +1,54 @@
+{
+    "nom": "Manguier",
+    "zones": [
+      {
+        "nom": "Zone A",
+        "pays": ["Inde", "Pakistan", "Bangladesh"],
+        "periode_plantation": {
+          "début": "2023-06-01",
+          "fin": "2023-08-31"
+        }
+      },
+      {
+        "nom": "Zone B",
+        "pays": ["Mexique", "Guatemala", "Honduras"],
+        "periode_plantation": {
+          "début": "2023-06-01",
+          "fin": "2023-07-31"
+        }
+      },
+      {
+        "nom": "Zone C",
+        "pays": ["Brésil", "Pérou", "Équateur"],
+        "periode_plantation": {
+          "début": "2023-12-01",
+          "fin": "2024-02-28"
+        }
+      },
+      {
+        "nom": "Zone D",
+        "pays": ["Thaïlande", "Vietnam", "Philippines"],
+        "periode_plantation": {
+          "début": "2023-05-01",
+          "fin": "2023-07-31"
+        }
+      },
+      {
+        "nom": "Zone E",
+        "pays": ["Kenya", "Tanzanie", "Ouganda"],
+        "periode_plantation": {
+          "début": "2023-11-01",
+          "fin": "2023-12-31"
+        }
+      },
+      {
+        "nom": "Zone F",
+        "pays": ["Australie", "Fidji", "Papouasie-Nouvelle-Guinée"],
+        "periode_plantation": {
+          "début": "2023-12-01",
+          "fin": "2024-02-28"
+        }
+      }
+    ]
+  }
+  
