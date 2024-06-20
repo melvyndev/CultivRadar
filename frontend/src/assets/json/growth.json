@@ -1,0 +1,32 @@
+{
+    "growth": {
+      "light_requirement": {
+        "Plein soleil": 5,
+        "Ensoleillé": 4,
+        "Partiellement ensoleillé": 3,
+        "Lumière filtrée": 2,
+        "Ombre légère": 1
+      },
+      "water_requirement": {
+        "Très élevé": 5,
+        "Élevé": 4,
+        "Modéré": 3,
+        "Faible": 2,
+        "Très faible": 1
+      },
+      "temperature_tolerance": {
+        "Tropical": 5,
+        "Tempéré": 4,
+        "Froid": 2,
+        "Très froid": 1
+      },
+      "soil_requirement": {
+        "Argileux": 3,
+        "Sableux": 2,
+        "Limoneux": 3,
+        "Tourbeux": 4,
+        "Salin": 1
+      }
+    }
+  }
+  

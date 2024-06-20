@@ -14,6 +14,39 @@ class PlantsTableSeeder extends Seeder
      */
     public function run()
     {
+        // Mapping des exigences et tolérances
+        $lightRequirement = [
+            'Plein soleil' => 5,
+            'Ensoleillé' => 4,
+            'Partiellement ensoleillé' => 3,
+            'Lumière filtrée' => 2,
+            'Ombre légère' => 1
+        ];
+
+        $waterRequirement = [
+            'Très élevé' => 5,
+            'Élevé' => 4,
+            'Modéré' => 3,
+            'Faible' => 2,
+            'Très faible' => 1
+        ];
+
+        $temperatureTolerance = [
+            'Tropical' => 5,
+            'Tempéré' => 4,
+            'Froid' => 2,
+            'Très froid' => 1
+        ];
+
+        $soilRequirement = [
+            'Argileux' => 3,
+            'Sableux' => 2,
+            'Limoneux' => 3,
+            'Tourbeux' => 4,
+            'Salin' => 1
+        ];
+
+        // Insertion des données dans la table 'plants'
         DB::table('plants')->insert([
             [
                 'scientific_name' => 'Opuntia ficus-indica',
@@ -23,7 +56,7 @@ class PlantsTableSeeder extends Seeder
                 'growth_conditions' => 'Sol bien drainé',
                 'light_requirement' => 'Plein soleil',
                 'water_requirement' => 'Très faible',
-                'soil_requirement' => 'Sablonneux, Caillouteux',
+                'soil_requirement' => 'Caillouteux',
                 'soil_ph' => 6.0,
                 'temperature_min' => -10.0,
                 'temperature_max' => 50.0,
@@ -58,7 +91,7 @@ class PlantsTableSeeder extends Seeder
                 'image' => 'default_image_url.jpg',
                 'growth_conditions' => 'Sol bien drainé',
                 'light_requirement' => 'Plein soleil',
-                'water_requirement' => 'Modéré à élevé',
+                'water_requirement' => 'Modéré',
                 'soil_requirement' => 'Léger, bien drainé, légèrement acide à neutre',
                 'soil_ph' => 5.5,
                 'temperature_min' => 5.0,
@@ -77,7 +110,7 @@ class PlantsTableSeeder extends Seeder
                 'growth_conditions' => 'Sol bien drainé',
                 'light_requirement' => 'Plein soleil',
                 'water_requirement' => 'Modéré',
-                'soil_requirement' => 'Sablonneux, Limoneux',
+                'soil_requirement' => 'Limoneux',
                 'soil_ph' => 6.0,
                 'temperature_min' => 20.0,
                 'temperature_max' => 40.0,
@@ -95,7 +128,7 @@ class PlantsTableSeeder extends Seeder
                 'growth_conditions' => 'Sol bien drainé',
                 'light_requirement' => 'Plein soleil',
                 'water_requirement' => 'Modéré',
-                'soil_requirement' => 'Limoneux, Sablonneux',
+                'soil_requirement' => 'Limoneux',
                 'soil_ph' => 6.0,
                 'temperature_min' => -2.0,
                 'temperature_max' => 24.0,
@@ -111,9 +144,9 @@ class PlantsTableSeeder extends Seeder
                 'family' => 'Rosaceae',
                 'image' => 'default_image_url.jpg',
                 'growth_conditions' => 'Sol bien drainé',
-                'light_requirement' => 'Plein soleil à mi-ombre',
+                'light_requirement' => 'Partiellement ensoleillé',
                 'water_requirement' => 'Modéré',
-                'soil_requirement' => 'Limoneux, Sablonneux',
+                'soil_requirement' => 'Limoneux',
                 'soil_ph' => 6.0,
                 'temperature_min' => -4.0,
                 'temperature_max' => 24.0,
@@ -131,7 +164,7 @@ class PlantsTableSeeder extends Seeder
                 'growth_conditions' => 'Sol bien drainé',
                 'light_requirement' => 'Plein soleil',
                 'water_requirement' => 'Modéré',
-                'soil_requirement' => 'Limoneux, Sablonneux',
+                'soil_requirement' => 'Limoneux',
                 'soil_ph' => 5.0,
                 'temperature_min' => 16.0,
                 'temperature_max' => 32.0,
@@ -149,67 +182,13 @@ class PlantsTableSeeder extends Seeder
                 'growth_conditions' => 'Sol bien drainé',
                 'light_requirement' => 'Plein soleil',
                 'water_requirement' => 'Modéré',
-                'soil_requirement' => 'Limoneux, Sablonneux',
+                'soil_requirement' => 'Limoneux',
                 'soil_ph' => 5.0,
                 'temperature_min' => 20.0,
                 'temperature_max' => 32.0,
                 'humidity_min' => 50.0,
                 'humidity_max' => 70.0,
-                'description' => 'Le litchi est un arbre tropical originaire des provinces du Guangdong et du Fujian, dans le sud-est de la Chine.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'scientific_name' => 'Fragaria × ananassa',
-                'common_name' => 'Fraise',
-                'family' => 'Rosaceae',
-                'image' => 'default_image_url.jpg',
-                'growth_conditions' => 'Sol bien drainé',
-                'light_requirement' => 'Plein soleil',
-                'water_requirement' => 'Arrosage régulier',
-                'soil_requirement' => 'Limoneux, Sablonneux',
-                'soil_ph' => 5.5,
-                'temperature_min' => -2.0,
-                'temperature_max' => 30.0,
-                'humidity_min' => 50.0,
-                'humidity_max' => 70.0,
-                'description' => 'La fraise des jardins est une espèce hybride largement cultivée du genre Fragaria.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'scientific_name' => 'Cocos nucifera',
-                'common_name' => 'Noix de coco',
-                'family' => 'Arecaceae',
-                'image' => 'default_image_url.jpg',
-                'growth_conditions' => 'Sol sablonneux',
-                'light_requirement' => 'Plein soleil',
-                'water_requirement' => 'Élevé',
-                'soil_requirement' => 'Sablonneux',
-                'soil_ph' => 5.0,
-                'temperature_min' => 20.0,
-                'temperature_max' => 32.0,
-                'humidity_min' => 60.0,
-                'humidity_max' => 95.0,
-                'description' => 'Le cocotier est un membre de la famille des palmiers et la seule espèce vivante connue du genre Cocos.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'scientific_name' => 'Prunus avium',
-                'common_name' => 'Cerise',
-                'family' => 'Rosaceae',
-                'image' => 'default_image_url.jpg',
-                'growth_conditions' => 'Sol bien drainé',
-                'light_requirement' => 'Plein soleil',
-                'water_requirement' => 'Modéré',
-                'soil_requirement' => 'Limoneux, Sablonneux',
-                'soil_ph' => 6.0,
-                'temperature_min' => -4.0,
-                'temperature_max' => 24.0,
-                'humidity_min' => 40.0,
-                'humidity_max' => 70.0,
-                'description' => 'Le cerisier est un arbre caduc qui produit des fruits comestibles appelés cerises.',
+                'description' => 'Le litchi est un fruit tropical de la famille des Sapindacées, apprécié pour sa chair juteuse et sucrée.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

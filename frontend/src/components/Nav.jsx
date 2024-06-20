@@ -23,13 +23,7 @@ const Navigation = () => {
                 <Navbar.Collapse id="navbarSupportedContent" className={`navbar-collapse collapse ${isOpen ? 'show' : ''}`}>
                 <Nav className="mr-auto">
                         <Nav.Link  as={Link} to="/" className="nav-link">Accueil</Nav.Link>
-                        <NavDropdown title={<span>Recherche de Localisation</span>} id="search-location-dropdown" className="nav-link">
-                            <NavDropdown.Item as={Link} to="/search-location/auto">Par géolocalisation</NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/search-location/manual">Par saisie manuelle</NavDropdown.Item>
-                        </NavDropdown>
-                        <NavDropdown title={<span> Prévisions Météorologiques</span>} id="weather-forecast-dropdown" className="nav-link">
-                            <NavDropdown.Item as={Link} to="/weather-forecast/current">Météo actuelle</NavDropdown.Item>
-                        </NavDropdown>
+                
                         <NavDropdown title={<span> Les plantes</span>} id="plants-dropdown" className="nav-link">
                             <NavDropdown.Item as={Link} to="/plants">Toutes les plantes</NavDropdown.Item>
                         </NavDropdown>

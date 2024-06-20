@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Nav from "../components/Nav";
 import PlantingChart from '../components/PlantingChart';
 import RadarChart from '../components/RadarChart';
+import growthData from '../assets/json/growth.json';
 
 function DetailPlant() {
     const [plant, setPlant] = useState({});
@@ -14,7 +15,6 @@ function DetailPlant() {
     useEffect(() => {
         axios.get(`http://localhost:8000/api/plants/${id}`)
             .then(response => {
-                console.log('Plant data fetched:', response.data);
                 setPlant(response.data);
                 setLoading(false);
             })
@@ -23,6 +23,17 @@ function DetailPlant() {
                 setLoading(false);
             });
     }, [id]);
+
+    useEffect(() => {
+        console.log({ criteria: "Lumière", value: growthData.growth.light_requirement[plant.light_requirement] });
+        console.log(plant.light_requirement);
+
+        // console.log({ criteria: "Eau", value: growthData.growth.water_requirement[plant.water_requirement] });
+        // console.log({ criteria: "Sol", value: growthData.growth.soil_requirement[plant.soil_requirement] });
+        // console.log({ criteria: "pH", value: 2 }); // Assuming a default value for pH
+        // console.log({ criteria: "Température", value: growthData.growth.temperature_tolerance[plant.temperature_min] }); // Using temperature min as value
+   
+    }, [plant]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -37,8 +48,8 @@ function DetailPlant() {
                     <div className="col-lg-6 col-md-12">
                         <div className="plant-details">
                             <img
-                                src={`http://127.0.0.1:8000/${plant.image}`} 
-                                onError={(e) => { e.target.src = require('../assets/images/gardening.png'); }} 
+                                src={`http://127.0.0.1:8000/${plant.image}`}
+                                onError={(e) => { e.target.src = require('../assets/images/gardening.png'); }}
                                 alt={plant.common_name}
                                 className="plant-image"
                             />
@@ -61,16 +72,15 @@ function DetailPlant() {
                     </div>
                     <div className="col-lg-6 col-md-12">
                         <h2>Diagramme Radar des Exigences de Croissance</h2>
-                        <div  className="radar-chart">
-                        <RadarChart className="radar-chart" data={[
-                            { criteria: "Lumière", value: 5 },
-                            { criteria: "Eau", value: 3 },
-                            { criteria: "Sol", value: plant.soil_ph },
-                            { criteria: "pH", value: 2 },
-                            { criteria: "Température", value: 4 }
-                        ]} />
+                        <div className="radar-chart">
+                            <RadarChart className="radar-chart" data={[
+                                { criteria: "Lumière", value: growthData.growth.light_requirement[plant.light_requirement] },
+                                { criteria: "Eau", value: growthData.growth.water_requirement[plant.water_requirement] },
+                                { criteria: "Sol", value: growthData.growth.soil_requirement[plant.soil_requirement] },
+                                { criteria: "pH", value: 2 },
+                                { criteria: "Température", value:  (((plant.temperature_max + plant.temperature_min)/2 - (-10)) / (40 - (-10))) * 5 }
+                            ]} />
                         </div>
-                       
                     </div>
                     <div className="col-12 mt-4">
                         <PlantingChart plantingData={plant.common_name} lat={-20.98539601183345} lng={55.64559675115465} />

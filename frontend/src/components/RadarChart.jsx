@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-
+import growthData from '../assets/json/growth.json';
 const RadarChart = ({ data }) => {
   const chartRef = useRef();
   const [dimensions, setDimensions] = useState({ width: window.innerWidth-20, height: window.innerHeight-20 });
