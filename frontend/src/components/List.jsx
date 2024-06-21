@@ -9,8 +9,6 @@ import Badge from 'react-bootstrap/Badge';
 import axios from 'axios';
 import ClimateData from "../services/ClimateData";
 
-
-
 const List = ({ lat, lng }) => {
   const [plants, setPlants] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +29,6 @@ const List = ({ lat, lng }) => {
         console.error('Error fetching plants data:', error);
       }
     };
-
 
     fetchPlants();
   }, [lat, lng]);
@@ -54,25 +51,29 @@ const List = ({ lat, lng }) => {
             <h3>Humidité Moyenne de l'Année Dernière: {averageHumidity.toFixed(2)}%</h3>
           </div>
         )}
-        <FixedSizeList
-          height={400}
-          width={360}
-          itemSize={46}
-          itemCount={plants.length}
-          overscanCount={5}
-        >
-          {({ index, style }) => (
-            <ListItem style={style} key={index} component="div" disablePadding>
-              <ListItemButton>
-                <Link to={`/detail-plant/${plants[index].id}`} state={{ plant: plants[index] }} style={{ textDecoration: 'none', width: '100%' }}>
-                  <Badge bg={"light"} text={"success"} style={{ width: '100%' }}>
-                    <ListItemText primary={`${plants[index].scientific_name} - ${plants[index].common_name}`} />
-                  </Badge>
-                </Link>
-              </ListItemButton>
-            </ListItem>
-          )}
-        </FixedSizeList>
+        {plants.length === 0 ? (
+          <p>Aucune plante à afficher.</p>
+        ) : (
+          <FixedSizeList
+            height={400}
+            width={360}
+            itemSize={46}
+            itemCount={plants.length}
+            overscanCount={5}
+          >
+            {({ index, style }) => (
+              <ListItem style={style} key={index} component="div" disablePadding>
+                <ListItemButton>
+                  <Link to={`/detail-plant/${plants[index].id}`} state={{ plant: plants[index] }} style={{ textDecoration: 'none', width: '100%' }}>
+                    <Badge bg={"light"} text={"success"} style={{ width: '100%' }}>
+                      <ListItemText primary={`${plants[index].scientific_name} - ${plants[index].common_name}`} />
+                    </Badge>
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+            )}
+          </FixedSizeList>
+        )}
       </Box>
     </div>
   );

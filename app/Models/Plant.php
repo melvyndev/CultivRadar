@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Translatable\HasTranslations; 
 
 class Plant extends Model
 {
     use CrudTrait;
     use HasFactory;
+    use HasTranslations;
+
     
 
     /*
@@ -24,7 +27,17 @@ class Plant extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    // protected $fillable = [];
+    protected $translatable  = [
+        'scientific_name',
+        'common_name',
+        'image',
+        'family',
+        'growth_conditions',
+        'light_requirement',
+        'water_requirement',
+        'soil_requirement',
+        'description'
+    ];
     // protected $hidden = [];
 
     /*

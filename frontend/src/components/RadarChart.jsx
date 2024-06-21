@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import growthData from '../assets/json/growth.json';
+import requirementsData from '../assets/json/requirements.json';
 // Import statements and initial component setup...
 
 const RadarChart = ({ data }) => {
@@ -163,11 +163,18 @@ const RadarChart = ({ data }) => {
       .style('stroke', 'black')
       .style('stroke-width', 1.5)
       .on('mouseover', (event, d) => {
-        tooltip.transition().duration(200).style('opacity', .9);
-        tooltip.html(`${d.criteria}: ${d.value}`)
-          .style('left', (event.pageX + 5) + 'px')
-          .style('top', (event.pageY - 28) + 'px');
+        console.log(requirementsData["requirements"][d.criteria][d.value]);
+        console.log(d.value + " " + d.criteria);
+    
+        if (requirementsData["requirements"][d.criteria][d.value]) {
+            tooltip.transition().duration(200).style('opacity', .9);
+            tooltip.html(`${d.criteria}: ${requirementsData["requirements"][d.criteria][d.value]}`)
+                .style('left', (event.pageX + 5) + 'px')
+                .style('top', (event.pageY - 28) + 'px')
+                .style('background', 'rgb(0, 255, 26)');
+        }
       })
+      
       .on('mouseout', () => {
         tooltip.transition().duration(500).style('opacity', 0);
       });

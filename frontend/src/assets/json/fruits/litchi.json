@@ -16,6 +16,31 @@
         "début": "2023-04-01",
         "fin": "2023-05-01"
       }
+    },
+    {
+      "nom": "Zone C",
+      "pays": ["Réunion", "Madagascar", "Maurice"],
+      "periode_plantation": {
+        "début": "2023-10-20",
+        "fin": "2023-12-05"
+      }
+    },
+    {
+      "nom": "Zone D",
+      "pays": ["Brésil", "Colombie", "Pérou"],
+      "periode_plantation": {
+        "début": "2023-05-01",
+        "fin": "2023-06-30"
+      }
+    },
+    {
+      "nom": "Zone E",
+      "pays": ["Kenya", "Tanzanie", "Ouganda"],
+      "periode_plantation": {
+        "début": "2023-06-01",
+        "fin": "2023-07-31"
+      }
     }
+    
   ]
 }

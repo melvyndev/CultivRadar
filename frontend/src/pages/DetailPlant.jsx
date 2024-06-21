@@ -25,12 +25,8 @@ function DetailPlant() {
     }, [id]);
 
     useEffect(() => {
-        console.log({ criteria: "Lumière", value: growthData.growth.light_requirement[plant.light_requirement] });
 
-        console.log({ criteria: "Eau", value: growthData.growth.water_requirement[plant.water_requirement] });
-        console.log({ criteria: "Sol", value: growthData.growth.soil_requirement[plant.soil_requirement] });
-        console.log({ criteria: "pH", value: 2 }); // Assuming a default value for pH
-        console.log({ criteria: "Température", value: growthData.growth.temperature_tolerance[plant.temperature_min] }); // Using temperature min as value
+        console.log({ criteria: "Température", value:   Math.round((((plant.temperature_max + plant.temperature_min)/2 - (-25)) / (55 - (-25))) * 5) }); // Using temperature min as value
    
     }, [plant]);
 
@@ -76,8 +72,8 @@ function DetailPlant() {
                                 { criteria: "Lumière", value: growthData.growth.light_requirement[plant.light_requirement] },
                                 { criteria: "Eau", value: growthData.growth.water_requirement[plant.water_requirement] },
                                 { criteria: "Sol", value: growthData.growth.soil_requirement[plant.soil_requirement] },
-                                { criteria: "pH", value: ((plant.soil_ph - (3)) / (9 - (3))) * 5  },
-                                { criteria: "Température", value:  (((plant.temperature_max + plant.temperature_min)/2 - (-25)) / (55 - (-25))) * 5 }
+                                { criteria: "pH", value:  Math.round(((plant.soil_ph - (3)) / (9 - (3))) * 5 ) },
+                                { criteria: "Température", value:   Math.round((((plant.temperature_max + plant.temperature_min)/2 - (-25)) / (55 - (-25))) * 5) }
 
                             ]} />
                         </div>

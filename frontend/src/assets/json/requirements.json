@@ -1,0 +1,39 @@
+{
+    "requirements": {
+      "Lumière": {
+        "5": "Plein soleil",
+        "4": "Ensoleillé",
+        "3": "Partiellement ensoleillé",
+        "2": "Lumière filtrée",
+        "1": "Ombre légère"
+      },
+      "Eau": {
+        "5": "Très élevé",
+        "4": "Élevé",
+        "3": "Modéré",
+        "2": "Faible",
+        "1": "Très faible"
+      },
+      "Température": {
+        "5": "Tropical",
+        "4": "Tempéré",
+        "2": "Froid",
+        "3": "Modéré",
+        "1": "Très froid"
+      },
+      "Sol": {
+        "3": "Limoneux",
+        "2": "Sableux",
+        "4": "Tourbeux",
+        "1": "Salin"
+      },
+      "pH": {
+            "5": "Très alcalin",
+            "4": "Alcalin",
+            "3": "Neutre",
+            "2": "Acide",
+            "1": "Très acide"
+    }
+    }
+  }
+  
