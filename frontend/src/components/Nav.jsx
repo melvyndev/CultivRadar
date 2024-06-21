@@ -23,7 +23,8 @@ const Navigation = () => {
                 <Navbar.Collapse id="navbarSupportedContent" className={`navbar-collapse collapse ${isOpen ? 'show' : ''}`}>
                 <Nav className="mr-auto">
                         <Nav.Link  as={Link} to="/" className="nav-link">Accueil</Nav.Link>
-                
+                        <Nav.Link  as={Link} to="/about" className="nav-link">A propos</Nav.Link>
+
                         <NavDropdown title={<span> Les plantes</span>} id="plants-dropdown" className="nav-link">
                             <NavDropdown.Item as={Link} to="/plants">Toutes les plantes</NavDropdown.Item>
                         </NavDropdown>
