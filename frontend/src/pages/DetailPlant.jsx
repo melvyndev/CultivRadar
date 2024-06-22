@@ -31,7 +31,9 @@ function DetailPlant() {
     }, [plant]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return   <div className='transparent p-3'>
+        <img width={200} src={require('../assets/images/loading.gif')} alt="chargement" />
+      </div>;
     }
 
     return (

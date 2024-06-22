@@ -1,0 +1,38 @@
+{
+    "nom": "Cacaoyer",
+    "zones": [
+      {
+        "nom": "Zone A",
+        "pays": ["Côte d'Ivoire", "Ghana", "Nigéria"],
+        "periode_plantation": {
+          "début": "2023-03-01",
+          "fin": "2023-04-30"
+        }
+      },
+      {
+        "nom": "Zone B",
+        "pays": ["Brésil", "Équateur", "Colombie"],
+        "periode_plantation": {
+          "début": "2023-05-01",
+          "fin": "2023-06-30"
+        }
+      },
+      {
+        "nom": "Zone C",
+        "pays": ["Indonésie", "Malaisie", "Papouasie-Nouvelle-Guinée"],
+        "periode_plantation": {
+          "début": "2023-09-01",
+          "fin": "2023-10-31"
+        }
+      },
+      {
+        "nom": "Zone D",
+        "pays": ["Équateur", "Venezuela", "Mexique"],
+        "periode_plantation": {
+          "début": "2023-11-01",
+          "fin": "2023-12-31"
+        }
+      }
+    ]
+  }
+  

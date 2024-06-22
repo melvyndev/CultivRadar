@@ -1,0 +1,38 @@
+{
+    "nom": "Caféier",
+    "zones": [
+      {
+        "nom": "Zone A",
+        "pays": ["Brésil", "Colombie", "Vietnam"],
+        "periode_plantation": {
+          "début": "2023-04-01",
+          "fin": "2023-05-31"
+        }
+      },
+      {
+        "nom": "Zone B",
+        "pays": ["Éthiopie", "Kenya", "Tanzanie"],
+        "periode_plantation": {
+          "début": "2023-02-01",
+          "fin": "2023-03-31"
+        }
+      },
+      {
+        "nom": "Zone C",
+        "pays": ["Costa Rica", "Guatemala", "Honduras"],
+        "periode_plantation": {
+          "début": "2023-06-01",
+          "fin": "2023-07-31"
+        }
+      },
+      {
+        "nom": "Zone D",
+        "pays": ["Inde", "Indonésie", "Pérou"],
+        "periode_plantation": {
+          "début": "2023-10-01",
+          "fin": "2023-11-30"
+        }
+      }
+    ]
+  }
+  

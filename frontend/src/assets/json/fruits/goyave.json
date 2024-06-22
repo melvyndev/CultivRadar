@@ -1,0 +1,38 @@
+{
+    "nom": "Goyave",
+    "zones": [
+      {
+        "nom": "Zone A",
+        "pays": ["Mexique", "Brésil", "Inde"],
+        "periode_plantation": {
+          "début": "Février",
+          "fin": "Avril"
+        }
+      },
+      {
+        "nom": "Zone B",
+        "pays": ["Thaïlande", "Indonésie", "Philippines"],
+        "periode_plantation": {
+          "début": "Juin",
+          "fin": "Août"
+        }
+      },
+      {
+        "nom": "Zone C",
+        "pays": ["Jamaïque", "Costa Rica", "Pérou"],
+        "periode_plantation": {
+          "début": "Septembre",
+          "fin": "Novembre"
+        }
+      },
+      {
+        "nom": "Zone D",
+        "pays": ["Île de La Réunion"],
+        "periode_plantation": {
+          "début": "Janvier",
+          "fin": "Décembre"
+        }
+      }
+    ]
+  }
+  

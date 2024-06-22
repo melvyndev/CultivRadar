@@ -1,0 +1,38 @@
+{
+    "nom": "Papaye",
+    "zones": [
+      {
+        "nom": "Zone A",
+        "pays": ["Île de La Réunion", "Maurice", "Madagascar"],
+        "periode_plantation": {
+          "début": "Janvier",
+          "fin": "Décembre"
+        }
+      },
+      {
+        "nom": "Zone B",
+        "pays": ["Mexique", "Guatemala", "Belize"],
+        "periode_plantation": {
+          "début": "Février",
+          "fin": "Avril"
+        }
+      },
+      {
+        "nom": "Zone C",
+        "pays": ["Thaïlande", "Vietnam", "Philippines"],
+        "periode_plantation": {
+          "début": "Avril",
+          "fin": "Juin"
+        }
+      },
+      {
+        "nom": "Zone D",
+        "pays": ["Brésil", "Colombie", "Équateur"],
+        "periode_plantation": {
+          "début": "Juillet",
+          "fin": "Septembre"
+        }
+      }
+    ]
+  }
+  

@@ -8,61 +8,81 @@ function About() {
     <main className="flex-shrink-0">
       <Nav />
       <Header />
-      <div className="container">
-        <h1>À propos de CultivRadar</h1>
-        <p>
-          <strong>Objectif du Projet :</strong> Développer une application Web qui fournit des recommandations de plantation basées sur les conditions météorologiques pour aider les utilisateurs à choisir les plantes les mieux adaptées à leur région et aux conditions environnementales locales.
-        </p>
-        <h2>Fonctionnalités Principales :</h2>
-        <ul className="list-unstyled">
-          <li>
-            <strong>Recherche de Localisation :</strong> Les utilisateurs peuvent rechercher leur emplacement ou saisir manuellement leur ville pour obtenir des recommandations de plantation adaptées à leur région.
-          </li>
-          <li>
-            <strong>Affichage des Prévisions Météorologiques :</strong> Affiche les prévisions météorologiques actuelles et futures pour la localisation sélectionnée.
-          </li>
-          <li>
-            <strong>Recommandations de Plantation :</strong> Basé sur les prévisions météorologiques et les informations sur les plantes, l'application recommande les plantes les mieux adaptées à la région et aux conditions environnementales.
-          </li>
-          <li>
-            <strong>Visualisation des Données :</strong> Utilisation de D3.js pour créer des graphiques interactifs et informatifs sur les conditions météorologiques, les périodes de plantation, etc.
-          </li>
-          <li>
-            <strong>Gestion des Utilisateurs :</strong> Inscription, connexion et gestion des profils utilisateurs.
-          </li>
-        </ul>
-        <h2>Détails Techniques :</h2>
-        <h3>Frontend :</h3>
-        <ul className="list-unstyled">
-          <li>Technologie : React.js</li>
-          <li>Librairie de Graphiques : D3.js</li>
-          <li>Fonctionnalités :
-            <ul>
-              <li>Interface utilisateur interactive pour la recherche de localisation et l'affichage des recommandations de plantation.</li>
-              <li>Intégration de graphiques interactifs pour visualiser les prévisions météorologiques et les données sur les plantes.</li>
-            </ul>
-          </li>
-        </ul>
-        <h3>Backend :</h3>
-        <ul className="list-unstyled">
-          <li>Technologie : Laravel</li>
-          <li>Gestion des Données :
-            <ul>
-              <li>Base de données MySQL pour stocker les informations sur les plantes, les prévisions météorologiques et les utilisateurs.</li>
-              <li>Utilisation de Laravel Backpack pour la gestion de l'API et des données.</li>
-            </ul>
-          </li>
-        </ul>
-        <h2>Livrables Attendus :</h2>
-        <ul className="list-unstyled">
-          <li>Interface utilisateur fonctionnelle avec les fonctionnalités de recherche de localisation et d'affichage des recommandations de plantation.</li>
-          <li>Intégration de D3.js pour créer les graphiques interactifs sur les conditions météorologiques et les plantes.</li>
-          <li>Backend robuste pour gérer les données des utilisateurs, des plantes et des prévisions météorologiques.</li>
-          <li>Documentation complète du code source et des fonctionnalités de l'application.</li>
-          <li>Déploiement de l'application sur un serveur en ligne pour permettre aux utilisateurs d'y accéder.</li>
-        </ul>
-        <p>
-          <strong>Conclusion :</strong> Le projet "Weather-based Planting Guide" vise à fournir une solution pratique et informatique pour aider les jardiniers et les agriculteurs à choisir les plantes les mieux adaptées à leur région et aux conditions météorologiques locales. En intégrant des fonctionnalités de recherche de localisation, d'affichage des prévisions météorologiques et de recommandations de plantation, l'application offrira une expérience utilisateur enrichissante et personnalisée.
+      <div className="container mt-4">
+        <h1 className="text-center mb-4">À propos de CultivRadar</h1>
+        
+        <div className="row mb-4">
+          <div className="col-md-6 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">Objectif du Projet</h5>
+                <p className="card-text">Fournir des recommandations de plantation basées sur les conditions météorologiques.</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-6 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">Fonctionnalités Principales</h5>
+                <ul className="list-unstyled">
+                  <li><i className="bi bi-geo-alt-fill"></i> Recherche de Localisation</li>
+                  <li><i className="bi bi-cloud-sun-fill"></i> Prévisions Météorologiques</li>
+                  <li><i className="bi bi-flower1"></i> Recommandations de Plantation</li>
+                  <li><i className="bi bi-bar-chart-fill"></i> Visualisation des Données</li>
+                  <li><i className="bi bi-person-fill"></i> Gestion des Utilisateurs</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 className="text-center mb-4">Détails Techniques</h2>
+        <div className="row mb-4">
+          <div className="col-md-6 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">Frontend</h5>
+                <ul className="list-unstyled">
+                  <li><i className="bi bi-code-slash"></i> React.js</li>
+                  <li><i className="bi bi-graph-up-arrow"></i> D3.js</li>
+                  <li><i className="bi bi-display"></i> Interface Interactive</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-6 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">Backend</h5>
+                <ul className="list-unstyled">
+                  <li><i className="bi bi-server"></i> Laravel</li>
+                  <li><i className="bi bi-database-fill"></i> MySQL</li>
+                  <li><i className="bi bi-gear-fill"></i> Laravel Backpack</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 className="text-center mb-4">Livrables Attendus</h2>
+        <div className="row mb-4">
+          <div className="col-md-12">
+            <div className="card">
+              <div className="card-body">
+                <ul className="list-unstyled">
+                  <li><i className="bi bi-check-circle-fill"></i> Interface utilisateur fonctionnelle</li>
+                  <li><i className="bi bi-graph-up"></i> Graphiques interactifs avec D3.js</li>
+                  <li><i className="bi bi-lock-fill"></i> Backend robuste</li>
+                  <li><i className="bi bi-file-earmark-text-fill"></i> Documentation complète</li>
+                  <li><i className="bi bi-cloud-arrow-up-fill"></i> Déploiement en ligne</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-center">
+          <strong>Conclusion :</strong> CultivRadar aide les jardiniers et les agriculteurs à choisir les plantes adaptées à leur région grâce à des recommandations basées sur les conditions météorologiques.
         </p>
       </div>
     </main>
